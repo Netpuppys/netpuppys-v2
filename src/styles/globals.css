@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0b0b0c;
+
+  /* Netpuppys brand palette (sampled from netpuppys.com) */
+  --color-ink: #0b0b0c;
+  --color-ink-soft: #33373d;
+  --color-muted: #6b6b70;
+  --color-orange: #ff5c00;
+  --color-orange-dark: #e04f00;
+  --color-sun: #ffbe11;
+  --color-peach: #ffebdb;
+  --color-blush: #fff5ee;
+  --color-lavender: #b0a7ef;
+  --color-coral: #f58d83;
+  --color-line: #efe3d8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-muted: var(--color-muted);
+  --color-orange: var(--color-orange);
+  --color-orange-dark: var(--color-orange-dark);
+  --color-sun: var(--color-sun);
+  --color-peach: var(--color-peach);
+  --color-blush: var(--color-blush);
+  --color-lavender: var(--color-lavender);
+  --color-coral: var(--color-coral);
+  --color-line: var(--color-line);
+  --font-display: var(--font-poppins);
+  --font-sans: var(--font-kanit);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  font-weight: 300;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee { animation: marquee-scroll 45s linear infinite; }
+.animate-marquee-reverse { animation: marquee-scroll 45s linear infinite reverse; }
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float { animation: float-y 5s ease-in-out infinite; }
+
+@keyframes dash-draw {
+  from { stroke-dashoffset: 400; }
+  to { stroke-dashoffset: 0; }
+}
+.animate-dash { stroke-dasharray: 6 8; animation: dash-draw 6s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee, .animate-marquee-reverse, .animate-float, .animate-dash { animation: none; }
+  html { scroll-behavior: auto; }
+}
