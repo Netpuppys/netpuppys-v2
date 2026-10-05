@@ -3,92 +3,86 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/common/Button";
-import { Reveal } from "@/components/common/Reveal";
-import { SectionEyebrow } from "@/components/common/SectionEyebrow";
+import { Carousel } from "@/components/common/Carousel";
+import { SectionTitle } from "@/components/common/SectionTitle";
 import { Container } from "@/components/containers/common/Container";
-import { Wrapper } from "@/components/containers/common/Wrapper";
 import { whyChoose } from "@/lib/data/home-content";
+import type { WhyTab } from "@/types/site";
 
+/** Transparency / Team of experts / Results tabs + "Why Choose Netpuppys ?" copy. */
 export const WhyChooseSection: React.FC = () => {
-  const [active, setActive] = useState(whyChoose.tabs[0].id);
+  const [active, setActive] = useState<WhyTab["id"]>("transparency");
   const tab = whyChoose.tabs.find((t) => t.id === active) ?? whyChoose.tabs[0];
-  const tabImage = whyChoose.tabImages[tab.id as keyof typeof whyChoose.tabImages];
 
   return (
-    <Wrapper className="bg-blush">
-      <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-        <Reveal variant="left">
-          <div className="rounded-[32px] bg-white p-3 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.25)]">
-            <div role="tablist" aria-label="Why Netpuppys" className="grid grid-cols-3 gap-1 rounded-[24px] bg-peach p-1.5">
-              {whyChoose.tabs.map((t) => (
-                <button
-                  key={t.id}
-                  role="tab"
-                  type="button"
-                  id={`tab-${t.id}`}
-                  aria-selected={t.id === active}
-                  aria-controls={`panel-${t.id}`}
-                  onClick={() => setActive(t.id)}
-                  className={[
-                    "rounded-[18px] px-2 py-3 font-display text-xs font-semibold uppercase tracking-wide transition-colors sm:text-[13px]",
-                    t.id === active ? "bg-ink text-white" : "text-ink hover:bg-white/60",
-                  ].join(" ")}
-                >
-                  {t.label}
-                </button>
-              ))}
-            </div>
+    <section className="mt-5">
+      <Container className="grid items-start gap-12 lg:grid-cols-[604px_1fr] lg:gap-[156px]">
+        <div>
+          <div role="tablist" aria-label="Why Netpuppys" className="grid grid-cols-3 lg:w-[604px]">
+            {whyChoose.tabs.map((t) => (
+              <button
+                key={t.id}
+                type="button"
+                role="tab"
+                id={`why-tab-${t.id}`}
+                aria-selected={t.id === active}
+                aria-controls={`why-panel-${t.id}`}
+                onClick={() => setActive(t.id)}
+                className={[
+                  "flex h-[72px] items-center justify-center rounded-t-[35px] px-2 font-display text-[13px] font-bold uppercase leading-[1.2] tracking-[-1px] text-ink sm:text-base",
+                  t.id === active ? "bg-blush" : "bg-transparent hover:text-orange",
+                ].join(" ")}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
 
-            <div role="tabpanel" id={`panel-${tab.id}`} aria-labelledby={`tab-${tab.id}`} className="p-6 sm:p-8">
-              <h3 className="font-display text-2xl font-semibold text-ink sm:text-3xl">{tab.title}</h3>
-              <p className="mt-3 leading-relaxed text-ink-soft">{tab.description}</p>
-              <div className="mt-6">
-                {tab.id === "team" ? (
-                  <div className="grid grid-cols-2 gap-2">
-                    {whyChoose.team.map((img) => (
-                      <Image
-                        key={img.src}
-                        src={img.src}
-                        alt={img.alt}
-                        width={img.width}
-                        height={img.height}
-                        sizes="240px"
-                        className="w-full rounded-xl"
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  tabImage && (
-                    <Image
-                      src={tabImage.src}
-                      alt={tabImage.alt}
-                      width={tabImage.width}
-                      height={tabImage.height}
-                      sizes="(min-width: 1024px) 480px, 90vw"
-                      className="w-full rounded-2xl"
-                    />
-                  )
-                )}
-              </div>
+          <div
+            role="tabpanel"
+            id={`why-panel-${tab.id}`}
+            aria-labelledby={`why-tab-${tab.id}`}
+            className={[
+              "min-h-[508px] rounded-b-[35px] bg-blush p-6 sm:p-10",
+              tab.id === "transparency" ? "rounded-tr-[35px]" : tab.id === "results" ? "rounded-tl-[35px]" : "rounded-t-[35px]",
+            ].join(" ")}
+          >
+            <h4 className="max-w-[300px] font-display text-[28px] font-bold leading-[1.2] tracking-[-0.6px] text-ink">{tab.title}</h4>
+            <p className="mt-[9px] text-base font-light leading-6 text-body">{tab.description}</p>
+
+            <div className={tab.id === "team" ? "mt-5" : "mt-0"}>
+              {tab.id === "team" ? (
+                <Carousel label="Netpuppys team" slideClassName="basis-full" autoplay={3000} arrows="edge">
+                  {whyChoose.team.map((m) => (
+                    <Image key={m.src} src={m.src} alt={m.alt} width={m.width} height={m.height} sizes="(min-width: 1024px) 524px, 90vw" className="w-full rounded-2xl" />
+                  ))}
+                </Carousel>
+              ) : (
+                <Image
+                  key={tab.id}
+                  src={tab.id === "results" ? whyChoose.resultsImage.src : whyChoose.transparencyImage.src}
+                  alt={tab.id === "results" ? whyChoose.resultsImage.alt : whyChoose.transparencyImage.alt}
+                  width={482}
+                  height={tab.id === "results" ? 224 : 221}
+                  className="w-full max-w-[482px]"
+                />
+              )}
             </div>
           </div>
-        </Reveal>
+        </div>
 
-        <Reveal variant="right">
-          <SectionEyebrow>{whyChoose.eyebrow}</SectionEyebrow>
-          <h2 className="mt-4 font-display text-3xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-4xl lg:text-[44px]">
-            {whyChoose.title}
-          </h2>
-          {whyChoose.paragraphs.map((p) => (
-            <p key={p.slice(0, 20)} className="mt-5 text-lg leading-relaxed text-ink-soft">
+        <div className="lg:pt-[89px]">
+          <SectionTitle className="max-w-[512px]">{whyChoose.title}</SectionTitle>
+          {whyChoose.paragraphs.map((p, i) => (
+            <p key={i} className={["max-w-[520px] text-base font-light leading-6 text-body", i === 0 ? "mt-[30px]" : "mt-4"].join(" ")}>
               {p}
             </p>
           ))}
-          <Button href={whyChoose.cta.href} variant="orange" className="mt-8">
+          <Button href={whyChoose.cta.href} className="mt-9">
             {whyChoose.cta.label}
           </Button>
-        </Reveal>
+        </div>
       </Container>
-    </Wrapper>
+    </section>
   );
 };

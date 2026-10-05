@@ -1,125 +1,116 @@
 import Image from "next/image";
 import { Button } from "@/components/common/Button";
-import { Icon } from "@/components/common/Icon";
-import { Reveal } from "@/components/common/Reveal";
 import { Container } from "@/components/containers/common/Container";
-import { hero, testimonials } from "@/lib/data/home-content";
+import { hero } from "@/lib/data/home-content";
 
-export const HeroSection: React.FC = () => (
-  <section className="relative overflow-hidden bg-gradient-to-b from-[#ffe3dc] via-blush to-white">
-    <div
-      aria-hidden="true"
-      className="pointer-events-none absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full bg-sun/25 blur-3xl"
-    />
-    <Container className="relative grid items-center gap-12 pb-16 pt-12 lg:grid-cols-[1.05fr_1fr] lg:gap-8 lg:pb-24 lg:pt-16">
-      <div>
-        <Reveal>
-          <p className="inline-flex items-center gap-2 rounded-full border border-orange/20 bg-white px-4 py-2 font-display text-xs font-semibold text-ink shadow-sm">
-            <Icon name="trophy" className="h-4 w-4 text-orange" />
-            {hero.eyebrow}
-          </p>
-        </Reveal>
+/*
+ * Desktop composition is laid out on the WordPress 1280 × 576 grid and
+ * expressed in % of that box, so it scales down proportionally on smaller
+ * screens. The coral audit card is sized in container-query units (cqw) for
+ * the same reason — at 1280px wide, 1cqw = 12.8px.
+ */
+const pct = (v: number, of: number) => `${(v / of) * 100}%`;
+const box = (x: number, y: number, w: number, h: number) => ({
+  left: pct(x, 1280),
+  top: pct(y, 576),
+  width: pct(w, 1280),
+  height: pct(h, 576),
+});
 
-        <Reveal delay={80}>
-          <h1 className="mt-6 font-display text-[44px] font-semibold leading-[1.02] tracking-tight text-ink sm:text-6xl lg:text-[76px]">
-            {hero.titleStart}{" "}
-            <span className="relative inline-block text-orange">
-              {hero.titleHighlight}
-              <svg
-                viewBox="0 0 300 20"
-                preserveAspectRatio="none"
-                className="absolute -bottom-2 left-0 h-3 w-full text-sun"
-                aria-hidden="true"
-              >
-                <path d="M3 14C60 5 150 3 297 10" fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" />
-              </svg>
-            </span>
-            <br />
-            {hero.titleEnd}
-          </h1>
-        </Reveal>
+export const HeroSection: React.FC = () => {
+  const { images } = hero;
 
-        <Reveal delay={160}>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl">{hero.description}</p>
-        </Reveal>
+  return (
+    <section className="bg-gradient-to-b from-hero to-[rgba(247,247,250,0)] pb-10 md:pb-0 lg:-mt-[81px] lg:pt-[81px]">
+      <Container className="pt-10 text-center md:pt-[51px]">
+        <h1 className="font-display text-[45px] font-semibold leading-[1.1] tracking-[-1px] text-ink md:text-[55px]">
+          {hero.title}
+        </h1>
+        <p className="mt-5 text-[22px] font-normal capitalize leading-[1.3] text-body">{hero.subtitle}</p>
+      </Container>
 
-        <Reveal delay={240} className="mt-8 flex flex-wrap gap-3">
-          <Button href={hero.primaryCta.href}>{hero.primaryCta.label}</Button>
-          <Button href={hero.secondaryCta.href} variant="outline">
-            {hero.secondaryCta.label}
-          </Button>
-        </Reveal>
-
-        <Reveal delay={320} className="mt-10 flex items-center gap-4">
-          <div className="flex -space-x-3">
-            {testimonials.items.map((t) => (
-              <Image
-                key={t.name}
-                src={t.photo.src}
-                alt=""
-                width={48}
-                height={48}
-                className="h-11 w-11 rounded-full border-2 border-white object-cover"
-              />
-            ))}
-          </div>
-          <div>
-            <div className="flex text-sun">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Icon key={i} name="star" className="h-4 w-4" />
-              ))}
-            </div>
-            <p className="mt-0.5 text-sm text-ink-soft">
-              <span className="font-display font-semibold text-ink">{hero.reviews.value}</span> {hero.reviews.label}
-            </p>
-          </div>
-        </Reveal>
-      </div>
-
-      {/* Visual composition */}
-      <Reveal variant="scale" delay={120} className="relative mx-auto h-[400px] w-full max-w-[600px] sm:h-[520px]">
-        <svg viewBox="0 0 320 120" className="absolute right-[14%] top-0 w-[46%] text-ink" aria-hidden="true">
-          <path
-            d="M6 110C20 40 90 10 170 22s120 50 140 80"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            className="animate-dash"
-          />
-          <path d="m300 92 10 12 4-15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        </svg>
-
-        <div className="absolute left-0 top-[16%] h-[58%] w-[76%] overflow-hidden rounded-[32px] bg-lavender shadow-[0_40px_80px_-40px_rgba(0,0,0,0.45)] ring-8 ring-white">
+      {/* ≥ md: the original collage */}
+      <Container className="hidden md:block">
+        <div className="@container relative mt-[1px] aspect-[1280/576] w-full">
           <Image
-            src={hero.images.team.src}
-            alt={hero.images.team.alt}
-            width={hero.images.team.width}
-            height={hero.images.team.height}
-            priority
-            sizes="(min-width: 1024px) 460px, 76vw"
-            className="h-full w-full object-cover object-[center_35%]"
+            src="/images/hero/line-arrow.svg"
+            alt=""
+            width={236}
+            height={55}
+            className="absolute"
+            style={{ ...box(919, 40, 236, 55), height: "auto" }}
           />
-        </div>
+          <div
+            aria-hidden="true"
+            className="absolute bg-contain bg-no-repeat"
+            style={{ ...box(0, 86, 538, 490), backgroundImage: `url(${images.leftBase.src})` }}
+          />
+          <Image
+            src={images.speaker.src}
+            alt={images.speaker.alt}
+            width={images.speaker.width}
+            height={images.speaker.height}
+            priority
+            sizes="(min-width: 1320px) 538px, 42vw"
+            className="absolute"
+            style={box(0, 0, 538, 500)}
+          />
+          <Image
+            src={images.right.src}
+            alt={images.right.alt}
+            width={images.right.width}
+            height={images.right.height}
+            priority
+            sizes="(min-width: 1320px) 735px, 58vw"
+            className="absolute"
+            style={box(545, 86, 735, 490)}
+          />
+          <Image
+            src={images.dog.src}
+            alt={images.dog.alt}
+            width={images.dog.width}
+            height={images.dog.height}
+            priority
+            sizes="150px"
+            className="absolute"
+            style={box(1092, 167, 150, 230)}
+          />
 
-        <div className="absolute left-[4%] top-[9%] rotate-[-6deg] rounded-full bg-orange px-4 py-2 font-display text-xs font-semibold text-white shadow-lg">
-          Woof! Leads incoming
+          <div
+            className="absolute flex items-center justify-between rounded-[3.9cqw] bg-coral px-[2.8cqw]"
+            style={box(371, 376, 358, 185)}
+          >
+            <p className="w-[10.2cqw] text-left text-[1.5625cqw] font-normal leading-[1.3] text-body">{hero.audit.text}</p>
+            <Button
+              href={hero.audit.cta.href}
+              className="!h-[3.6cqw] !gap-[0.6cqw] !rounded-[1.4cqw] !px-[2.27cqw] !text-[0.94cqw]"
+            >
+              {hero.audit.cta.label}
+            </Button>
+          </div>
         </div>
+      </Container>
 
-        <Image
-          src={hero.images.dog.src}
-          alt={hero.images.dog.alt}
-          width={hero.images.dog.width}
-          height={hero.images.dog.height}
-          priority
-          sizes="(min-width: 1024px) 240px, 36vw"
-          className="animate-float absolute -bottom-2 -right-2 h-[74%] w-auto drop-shadow-[0_24px_30px_rgba(0,0,0,0.25)]"
-        />
-
-        <div className="absolute bottom-[2%] left-[6%] rounded-2xl bg-white px-5 py-4 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)]">
-          <p className="font-display text-2xl font-semibold text-ink">{hero.revenue.value}</p>
-          <p className="text-xs text-muted">{hero.revenue.label}</p>
+      {/* < md: stacked, as on the WordPress mobile layout */}
+      <Container className="md:hidden">
+        <Image src="/images/hero/line-arrow.svg" alt="" width={236} height={55} className="ml-auto mt-8 w-2/3" />
+        <div className="relative mt-4 flex items-end gap-2">
+          <div className="relative w-[72%]">
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-0 bottom-0 top-[14%] bg-contain bg-bottom bg-no-repeat"
+              style={{ backgroundImage: `url(${images.leftBase.src})` }}
+            />
+            <Image src={images.speaker.src} alt={images.speaker.alt} width={images.speaker.width} height={images.speaker.height} priority sizes="72vw" className="relative w-full" />
+          </div>
+          <Image src={images.dog.src} alt={images.dog.alt} width={images.dog.width} height={images.dog.height} priority sizes="28vw" className="w-[26%]" />
         </div>
-      </Reveal>
-    </Container>
-  </section>
-);
+        <div className="mt-6 flex flex-col items-center gap-5 rounded-[50px] bg-coral px-8 py-8 text-center">
+          <p className="max-w-[150px] text-[20px] font-normal leading-[1.3] text-body">{hero.audit.text}</p>
+          <Button href={hero.audit.cta.href}>{hero.audit.cta.label}</Button>
+        </div>
+        <Image src={images.right.src} alt={images.right.alt} width={images.right.width} height={images.right.height} sizes="100vw" className="mt-6 w-full" />
+      </Container>
+    </section>
+  );
+};

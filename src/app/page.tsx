@@ -1,31 +1,30 @@
 import {
   BlogSection,
-  ClientMarquee,
-  FinalCtaSection,
+  ClientLogosSection,
   HeroSection,
+  HeroStatsSection,
   ProofSection,
   ServicesSection,
   SuccessStoriesSection,
   TestimonialsSection,
-  ViralBanner,
   WhatWeDoSection,
   WhyChooseSection,
 } from "@/containers/pages-component/home";
 
+/** Homepage — section order mirrors netpuppys.com. */
 export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <ClientMarquee />
+      <HeroStatsSection />
       <WhatWeDoSection />
-      <ViralBanner />
       <ServicesSection />
       <WhyChooseSection />
       <SuccessStoriesSection />
+      <ClientLogosSection />
+      <BlogSection />
       <ProofSection />
       <TestimonialsSection />
-      <BlogSection />
-      <FinalCtaSection />
     </>
   );
 }

@@ -11,28 +11,30 @@ export interface ImageAsset {
   height: number;
 }
 
-export type IconName =
-  | "audience"
-  | "analytics"
-  | "outcome"
-  | "code"
-  | "social"
-  | "performance"
-  | "ugc"
-  | "arrow"
-  | "phone"
-  | "star"
-  | "trophy";
+export interface CtaLink {
+  label: string;
+  href: string;
+}
+
+/** Font Awesome icon keys used on the site (mapped in components/common/FaIcon). */
+export type IconKey =
+  | "user"
+  | "chartBar"
+  | "grinWink"
+  | "laptopCode"
+  | "sistrix"
+  | "chartLine"
+  | "cameraRetro";
 
 export interface FeatureCard {
   title: string;
   description: string;
-  icon: IconName;
+  icon: IconKey;
   href?: string;
 }
 
 export interface WhyTab {
-  id: string;
+  id: "transparency" | "team" | "results";
   label: string;
   title: string;
   description: string;
@@ -43,14 +45,12 @@ export interface CaseStudy {
   metric: string;
   label: string;
   href: string;
-  tone: "orange" | "ink" | "yellow" | "peach";
+  image: ImageAsset;
 }
 
 export interface ProofStat {
   value: number;
-  prefix?: string;
-  suffix?: string;
-  decimals?: number;
+  suffix: string;
   label: string;
 }
 
@@ -68,12 +68,7 @@ export interface BlogPost {
   image: ImageAsset;
 }
 
-export interface FooterLinkColumn {
-  heading: string;
-  links: NavLink[];
-}
-
 export interface SocialLink {
-  label: "Instagram" | "Facebook" | "X" | "YouTube" | "LinkedIn";
+  label: "Instagram" | "X" | "Facebook" | "YouTube";
   href: string;
 }

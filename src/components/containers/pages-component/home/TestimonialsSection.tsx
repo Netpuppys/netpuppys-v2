@@ -1,62 +1,70 @@
+"use client";
+
 import Image from "next/image";
-import { Button } from "@/components/common/Button";
-import { Icon } from "@/components/common/Icon";
-import { Reveal } from "@/components/common/Reveal";
-import { SectionHeading } from "@/components/common/SectionHeading";
+import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
+import { AvatarStack } from "@/components/common/AvatarStack";
+import { Carousel } from "@/components/common/Carousel";
+import { SlashDivider } from "@/components/common/SlashDivider";
+import { StarRating } from "@/components/common/StarRating";
 import { Container } from "@/components/containers/common/Container";
-import { Wrapper } from "@/components/containers/common/Wrapper";
 import { testimonials } from "@/lib/data/home-content";
 
+/** White card overlapping the proof section: quote slider (left) + dashed arrow and reviews row (right). */
 export const TestimonialsSection: React.FC = () => (
-  <Wrapper>
+  <section className="relative -mt-[44px]">
     <Container>
-      <Reveal>
-        <SectionHeading
-          eyebrow={testimonials.eyebrow}
-          title={testimonials.title}
-          action={
-            <Button href={testimonials.cta.href} variant="outline">
-              {testimonials.cta.label}
-            </Button>
-          }
-        />
-      </Reveal>
+      <div className="grid grid-cols-1 rounded-t-[30px] bg-white lg:grid-cols-[704px_1fr] lg:rounded-t-[50px]">
+        <div className="relative min-w-0 px-6 pb-16 pt-12 md:px-[62px] lg:min-h-[570px] lg:pt-[60px]">
+          <FontAwesomeIcon icon={faQuoteLeft} className="text-[62px] text-orange" aria-hidden="true" />
+          <Carousel
+            label="Client testimonials"
+            slideClassName="basis-full"
+            autoplay={5000}
+            arrows="round"
+            arrowsClassName="mt-8 lg:absolute lg:-left-[14px] lg:top-[351px] lg:mt-0"
+            className="mt-[47px] max-w-[510px] lg:min-h-[320px]"
+          >
+            {testimonials.items.map((t) => (
+              <figure key={t.name}>
+                <blockquote className="text-xl font-light italic leading-[30px] tracking-[-0.3px] text-ink">
+                  &quot;{t.quote}&quot;
+                </blockquote>
+                <figcaption className="mt-[25px] flex items-center gap-5">
+                  <Image src={t.photo.src} alt={t.photo.alt} width={100} height={100} className="h-[50px] w-[50px] rounded-full object-cover" />
+                  <span>
+                    <span className="block text-base font-normal leading-[20.8px] text-ink">{t.name}</span>
+                    <span className="block text-sm font-light leading-[21px] text-body">{t.role}</span>
+                  </span>
+                </figcaption>
+              </figure>
+            ))}
+          </Carousel>
+        </div>
 
-      <div className="mt-12 grid gap-5 lg:grid-cols-3">
-        {testimonials.items.map((t, i) => (
-          <Reveal key={t.name} delay={i * 90}>
-            <figure
-              className={[
-                "flex h-full flex-col rounded-[28px] p-8",
-                i === 1 ? "bg-peach" : "border border-line bg-white",
-              ].join(" ")}
-            >
-              <svg viewBox="0 0 32 24" className="h-7 w-9 text-orange" fill="currentColor" aria-hidden="true">
-                <path d="M0 24V14C0 6 4 1 12 0l1 4C8 5 6 8 6 12h6v12H0Zm18 0V14c0-8 4-13 12-14l1 4c-5 1-7 4-7 8h6v12H18Z" />
-              </svg>
-              <blockquote className="mt-6 flex-1 text-lg leading-relaxed text-ink">“{t.quote}”</blockquote>
-              <figcaption className="mt-8 flex items-center gap-4 border-t border-ink/10 pt-6">
-                <Image
-                  src={t.photo.src}
-                  alt={t.photo.alt}
-                  width={56}
-                  height={56}
-                  className="h-14 w-14 rounded-full object-cover"
-                />
-                <div className="flex-1">
-                  <p className="font-display font-semibold text-ink">{t.name}</p>
-                  <p className="text-sm text-muted">{t.role}</p>
-                </div>
-                <div className="flex text-sun">
-                  {Array.from({ length: 5 }).map((_, s) => (
-                    <Icon key={s} name="star" className="h-3.5 w-3.5" />
-                  ))}
-                </div>
-              </figcaption>
-            </figure>
-          </Reveal>
-        ))}
+        <div className="relative px-6 pb-12 lg:min-h-[570px] lg:px-0">
+          <Image
+            src="/images/shapes/line-arrow-2.svg"
+            alt=""
+            width={340}
+            height={329}
+            className="absolute left-[118px] top-[66px] hidden lg:block"
+          />
+          <div className="flex flex-wrap items-center gap-6 lg:absolute lg:left-0 lg:top-[410px] lg:gap-0">
+            <div className="lg:w-[184px]">
+              <StarRating />
+              <p className="mt-1 text-base font-normal leading-[20.8px] text-ink">{testimonials.reviews.label}</p>
+            </div>
+            <SlashDivider className="hidden lg:block" />
+            <AvatarStack avatars={testimonials.reviews.avatars} className="lg:ml-[61px]" />
+            <Link href={testimonials.reviews.cta.href} className="group inline-flex items-center gap-2.5 text-base font-normal tracking-[-0.2px] text-ink lg:ml-5">
+              <span className="hover-fill">{testimonials.reviews.cta.label}</span>
+              <FontAwesomeIcon icon={faArrowRight} className="text-base" />
+            </Link>
+          </div>
+        </div>
       </div>
     </Container>
-  </Wrapper>
+  </section>
 );

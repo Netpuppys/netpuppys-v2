@@ -1,60 +1,60 @@
 import Link from "next/link";
-import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
-import { Icon } from "@/components/common/Icon";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import type { ReactNode } from "react";
 
-type ButtonVariant = "solid" | "orange" | "outline" | "light" | "link";
+type ButtonVariant = "solid" | "link";
 
-interface BaseProps {
+interface ButtonProps {
+  href: string;
+  children: ReactNode;
   variant?: ButtonVariant;
+  /** Underline colour for the `link` variant (orange on most sections, sand on Success Stories). */
+  underline?: "orange" | "sand";
   showArrow?: boolean;
   className?: string;
-  children: ReactNode;
 }
 
-type ButtonAsLink = BaseProps & AnchorHTMLAttributes<HTMLAnchorElement> & { href: string };
-type ButtonAsButton = BaseProps & ButtonHTMLAttributes<HTMLButtonElement> & { href?: undefined };
-type ButtonProps = ButtonAsLink | ButtonAsButton;
-
-const base =
-  "group inline-flex items-center justify-center gap-2 whitespace-nowrap font-display text-sm font-semibold transition-all duration-200";
-
-const variantClasses: Record<ButtonVariant, string> = {
-  solid: "rounded-full bg-ink px-6 py-3.5 text-white hover:bg-orange",
-  orange: "rounded-full bg-orange px-6 py-3.5 text-white hover:bg-orange-dark",
-  outline: "rounded-full border border-ink/15 bg-white px-6 py-3.5 text-ink hover:border-ink",
-  light: "rounded-full bg-white px-6 py-3.5 text-ink hover:bg-sun",
-  link: "border-b-2 border-orange pb-1 text-xs uppercase tracking-[0.12em] text-ink hover:text-orange",
-};
-
-/** The one button/link primitive — every CTA on the site renders through it. */
+/**
+ * The theme's single button style: black 46px pill (18px radius) with Syne
+ * 12px bold uppercase label + arrow, or a text link with a coloured rule
+ * underneath. The label gets the lavender hover fill used site-wide.
+ */
 export const Button: React.FC<ButtonProps> = ({
-  variant = "solid",
-  showArrow = true,
-  className = "",
-  children,
   href,
-  ...props
+  children,
+  variant = "solid",
+  underline = "orange",
+  showArrow,
+  className = "",
 }) => {
-  const classes = [base, variantClasses[variant], className].filter(Boolean).join(" ");
-  const content = (
-    <>
-      <span>{children}</span>
-      {showArrow && (
-        <Icon name="arrow" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-      )}
-    </>
-  );
+  const arrow = showArrow ?? variant === "solid";
 
-  if (href) {
+  if (variant === "link") {
     return (
-      <Link href={href} className={classes} {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}>
-        {content}
+      <Link
+        href={href}
+        className={[
+          "group inline-flex items-center border-b-2 pb-0.5 font-syne text-xs font-bold uppercase leading-[20.4px] tracking-[-0.2px] text-ink",
+          underline === "orange" ? "border-orange" : "border-sand",
+          className,
+        ].join(" ")}
+      >
+        <span className="hover-fill">{children}</span>
       </Link>
     );
   }
+
   return (
-    <button className={classes} {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}>
-      {content}
-    </button>
+    <Link
+      href={href}
+      className={[
+        "group inline-flex h-[46px] items-center justify-center gap-2 rounded-[18px] bg-ink px-[29px] font-syne text-xs font-bold uppercase leading-[20.4px] tracking-[-0.2px] text-white",
+        className,
+      ].join(" ")}
+    >
+      <span className="hover-fill [--fill:rgba(176,167,239,0.35)]">{children}</span>
+      {arrow && <FontAwesomeIcon icon={faArrowRight} className="text-xs" aria-hidden="true" />}
+    </Link>
   );
 };

@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { Layout } from "@/components/containers/common/Layout";
-import { kanit, poppins } from "@/lib/helpers/fonts";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { kanit, poppins, syne } from "@/lib/helpers/fonts";
 import "@/styles/globals.css";
+
+// Font Awesome CSS is imported above; stop it injecting a duplicate at runtime.
+config.autoAddCss = false;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://netpuppys.com"),
@@ -17,7 +22,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${poppins.variable} ${kanit.variable} h-full antialiased`}>
+    <html lang="en" className={`${poppins.variable} ${kanit.variable} ${syne.variable} h-full antialiased`}>
       <body className="min-h-full bg-white text-ink">
         <Layout>{children}</Layout>
       </body>

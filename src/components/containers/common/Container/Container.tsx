@@ -5,14 +5,7 @@ interface ContainerProps {
   className?: string;
 }
 
-/** Page-wide max-width + horizontal gutter, reused by every section. */
-export const Container: React.FC<ContainerProps> = ({
-  children,
-  className = "",
-}) => {
-  return (
-    <div className={`mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-10 ${className}`}>
-      {children}
-    </div>
-  );
-};
+/** 1280px content width with a 20px gutter — matches the WordPress theme's boxed width. */
+export const Container: React.FC<ContainerProps> = ({ children, className = "" }) => (
+  <div className={`mx-auto w-full max-w-[1320px] px-5 ${className}`}>{children}</div>
+);

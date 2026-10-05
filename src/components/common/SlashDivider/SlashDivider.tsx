@@ -1,0 +1,13 @@
+/** Double diagonal hairline used between the stat items (desktop) — the theme's own SVG. */
+export const SlashDivider: React.FC<{ className?: string }> = ({ className = "" }) => (
+  <svg
+    viewBox="0 0 30.8665885 47.6582776"
+    className={["h-[47px] w-[31px] fill-line", className].join(" ")}
+    aria-hidden="true"
+  >
+    <path
+      d="m10.218508 7.32750149.2269953.44550326 19.5215915 38.31328055.2269952.4455033-.8910065.4539905-.2269953-.4455033-19.52159146-38.31328055-.22699525-.44550326zm-9.99999999-8 .22699525.44550326 19.52159154 38.31328055.2269952.4455033-.8910065.4539905-.2269953-.4455033-19.52159146-38.31328055-.22699525-.44550326z"
+      transform="translate(.672499 .672499)"
+    />
+  </svg>
+);

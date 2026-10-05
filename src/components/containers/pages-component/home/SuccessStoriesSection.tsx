@@ -1,59 +1,43 @@
 import Link from "next/link";
 import { Button } from "@/components/common/Button";
-import { Icon } from "@/components/common/Icon";
-import { Reveal } from "@/components/common/Reveal";
-import { SectionHeading } from "@/components/common/SectionHeading";
+import { Carousel } from "@/components/common/Carousel";
+import { Eyebrow } from "@/components/common/Eyebrow";
+import { SectionTitle } from "@/components/common/SectionTitle";
 import { Container } from "@/components/containers/common/Container";
-import { Wrapper } from "@/components/containers/common/Wrapper";
 import { successStories } from "@/lib/data/home-content";
-import type { CaseStudy } from "@/types/site";
 
-const tones: Record<CaseStudy["tone"], string> = {
-  orange: "bg-orange text-white",
-  ink: "bg-ink text-white",
-  yellow: "bg-sun text-ink",
-  peach: "bg-peach text-ink",
-};
-
+/** Left intro + 2-up case study carousel (image cards with dark fade, metric and label). */
 export const SuccessStoriesSection: React.FC = () => (
-  <Wrapper id="work">
-    <Container>
-      <Reveal>
-        <SectionHeading
-          eyebrow={successStories.eyebrow}
-          title={successStories.title}
-          action={
-            <Button href={successStories.cta.href} variant="outline">
-              {successStories.cta.label}
-            </Button>
-          }
-        />
-      </Reveal>
-
-      <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {successStories.items.map((c, i) => (
-          <Reveal key={c.client} delay={i * 80}>
-            <Link
-              href={c.href}
-              className={[
-                "group relative flex h-72 flex-col justify-between overflow-hidden rounded-[28px] p-7 transition-transform duration-300 hover:-translate-y-1",
-                tones[c.tone],
-              ].join(" ")}
-            >
-              <div className="flex items-start justify-between gap-4">
-                <h3 className="font-display text-lg font-semibold leading-snug">{c.client}</h3>
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-current/10 ring-1 ring-current/20 transition-transform group-hover:-rotate-45">
-                  <Icon name="arrow" className="h-4 w-4" />
-                </span>
-              </div>
-              <div>
-                <p className="font-display text-6xl font-semibold tracking-tight">{c.metric}</p>
-                <p className="mt-1 text-base opacity-80">{c.label}</p>
-              </div>
-            </Link>
-          </Reveal>
-        ))}
+  <section className="mt-[100px]">
+    <Container className="grid gap-10 lg:grid-cols-[448px_1fr] lg:gap-0">
+      <div className="flex flex-col lg:min-h-[400px]">
+        <Eyebrow as="h2" className="lg:mt-[21px]">
+          {successStories.eyebrow}
+        </Eyebrow>
+        <SectionTitle className="mt-5 lg:mt-[62px]">{successStories.title}</SectionTitle>
+        <Button href={successStories.cta.href} variant="link" underline="sand" className="mt-8 self-start lg:mt-auto">
+          {successStories.cta.label}
+        </Button>
       </div>
+
+      <Carousel label="Success stories" slideClassName="basis-full md:basis-1/2" gap={30} slidesToScroll={2} dots>
+        {successStories.items.map((c) => (
+          <Link
+            key={c.client}
+            href={c.href}
+            className="group relative block aspect-[401/400] overflow-hidden rounded-[50px] bg-cover bg-center"
+            style={{ backgroundImage: `url(${c.image.src})` }}
+            aria-label={`${c.client}: ${c.metric} ${c.label}`}
+          >
+            <span className="absolute inset-0 bg-gradient-to-b from-[rgba(156,156,156,0.18)] to-black opacity-70" />
+            <span className="absolute inset-x-10 bottom-[45px] text-white">
+              <span className="block font-display text-[40px] font-medium leading-[56px] tracking-[-2px]">{c.metric}</span>
+              <span className="-mt-2 block font-display text-xl font-bold leading-7 tracking-[-0.6px]">{c.label}</span>
+              <span className="mt-3 block h-px w-full bg-white" />
+            </span>
+          </Link>
+        ))}
+      </Carousel>
     </Container>
-  </Wrapper>
+  </section>
 );
