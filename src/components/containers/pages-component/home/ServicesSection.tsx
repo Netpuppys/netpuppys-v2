@@ -5,14 +5,16 @@ import { FaIcon } from "@/components/common/FaIcon";
 import { SectionTitle } from "@/components/common/SectionTitle";
 import { Container } from "@/components/containers/common/Container";
 import { services } from "@/lib/data/home-content";
+import type { FeatureCard } from "@/types/site";
 
-/**
- * Team banner (straddling the start of the peach gradient), the four service
- * cards, and the "Think you can go viral without us?" strip with the
- * lying-down mascot — one peach-to-white band on the WordPress site.
- */
-export const ServicesSection: React.FC = () => (
-  <section className="relative mt-[74px]">
+interface ServicesSectionProps {
+  items?: FeatureCard[];
+  showCta?: boolean;
+  id?: string;
+}
+
+export const ServicesSection: React.FC<ServicesSectionProps> = ({ items = services.items, showCta = true, id }) => (
+  <section id={id} className="relative mt-[74px] scroll-mt-24">
     <div
       aria-hidden="true"
       className="absolute inset-x-0 bottom-0 top-[256px] bg-gradient-to-b from-peach to-[rgba(247,247,250,0)]"
@@ -28,12 +30,14 @@ export const ServicesSection: React.FC = () => (
       />
 
       <SectionTitle className="mt-[46px]">{services.title}</SectionTitle>
-      <Button href={services.cta.href} className="mt-5">
-        {services.cta.label}
-      </Button>
+      {showCta && (
+        <Button href={services.cta.href} className="mt-5">
+          {services.cta.label}
+        </Button>
+      )}
 
       <div className="mt-[50px] grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {services.items.map((s) => (
+        {items.map((s) => (
           <article key={s.title} className="flex flex-col rounded-[34px] bg-white px-[30px] pb-[30px] pt-10 lg:min-h-[419px]">
             <Link
               href={s.href ?? "#"}

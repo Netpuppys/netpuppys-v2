@@ -5,8 +5,8 @@ import { SectionTitle } from "@/components/common/SectionTitle";
 import { Container } from "@/components/containers/common/Container";
 import { whatWeDo } from "@/lib/data/home-content";
 
-export const WhatWeDoSection: React.FC = () => (
-  <section className="mt-[70px]">
+export const WhatWeDoSection: React.FC<{ id?: string }> = ({ id }) => (
+  <section id={id} className="mt-[70px] scroll-mt-24">
     <Container>
       <div className="grid gap-6 lg:grid-cols-[640px_1fr] lg:gap-0">
         <div>

@@ -7,15 +7,15 @@ import { Carousel } from "@/components/common/Carousel";
 import { SectionTitle } from "@/components/common/SectionTitle";
 import { Container } from "@/components/containers/common/Container";
 import { whyChoose } from "@/lib/data/home-content";
-import type { WhyTab } from "@/types/site";
+import type { CtaLink, WhyTab } from "@/types/site";
 
 /** Transparency / Team of experts / Results tabs + "Why Choose Netpuppys ?" copy. */
-export const WhyChooseSection: React.FC = () => {
+export const WhyChooseSection: React.FC<{ cta?: CtaLink; id?: string }> = ({ cta = whyChoose.cta, id }) => {
   const [active, setActive] = useState<WhyTab["id"]>("transparency");
   const tab = whyChoose.tabs.find((t) => t.id === active) ?? whyChoose.tabs[0];
 
   return (
-    <section className="mt-5">
+    <section id={id} className="mt-5 scroll-mt-24">
       <Container className="grid items-start gap-12 lg:grid-cols-[604px_1fr] lg:gap-[156px]">
         <div>
           <div role="tablist" aria-label="Why Netpuppys" className="grid grid-cols-3 lg:w-[604px]">
@@ -78,8 +78,8 @@ export const WhyChooseSection: React.FC = () => {
               {p}
             </p>
           ))}
-          <Button href={whyChoose.cta.href} className="mt-9">
-            {whyChoose.cta.label}
+          <Button href={cta.href} className="mt-9">
+            {cta.label}
           </Button>
         </div>
       </Container>

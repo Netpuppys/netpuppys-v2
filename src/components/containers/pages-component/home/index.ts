@@ -4,7 +4,4 @@ export { WhatWeDoSection } from "./WhatWeDoSection";
 export { ServicesSection } from "./ServicesSection";
 export { WhyChooseSection } from "./WhyChooseSection";
 export { SuccessStoriesSection } from "./SuccessStoriesSection";
-export { ClientLogosSection } from "./ClientLogosSection";
 export { BlogSection } from "./BlogSection";
-export { ProofSection } from "./ProofSection";
-export { TestimonialsSection } from "./TestimonialsSection";

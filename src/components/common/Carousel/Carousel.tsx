@@ -16,6 +16,8 @@ interface CarouselProps {
   loop?: boolean;
   slidesToScroll?: number;
   dots?: boolean;
+  /** "ink" = 6px black dots (default); "orange" = 12px orange/blush dots. */
+  dotsTone?: "ink" | "orange";
   /** "edge" = thin chevrons at the slider edges; "round" = white circular prev/next buttons. */
   arrows?: false | "edge" | "round";
   arrowsClassName?: string;
@@ -35,6 +37,7 @@ export const Carousel: React.FC<CarouselProps> = ({
   loop = true,
   slidesToScroll = 1,
   dots = false,
+  dotsTone = "ink",
   arrows = false,
   arrowsClassName = "",
   className = "",
@@ -113,7 +116,7 @@ export const Carousel: React.FC<CarouselProps> = ({
       )}
 
       {dots && snaps.length > 1 && (
-        <div className="mt-5 flex justify-center gap-3">
+        <div className={["flex justify-center", dotsTone === "orange" ? "mt-[13px] gap-3" : "mt-5 gap-3"].join(" ")}>
           {snaps.map((_, i) => (
             <button
               key={i}
@@ -121,7 +124,12 @@ export const Carousel: React.FC<CarouselProps> = ({
               onClick={() => embla?.scrollTo(i)}
               aria-label={`Go to slide ${i + 1}`}
               aria-current={i === selected}
-              className={["h-1.5 w-1.5 rounded-full bg-ink transition-opacity", i === selected ? "opacity-100" : "opacity-20"].join(" ")}
+              className={[
+                "rounded-full transition-colors",
+                dotsTone === "orange"
+                  ? ["h-3 w-3", i === selected ? "bg-orange" : "bg-blush"].join(" ")
+                  : ["h-1.5 w-1.5 bg-ink", i === selected ? "opacity-100" : "opacity-20"].join(" "),
+              ].join(" ")}
             />
           ))}
         </div>

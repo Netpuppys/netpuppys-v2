@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Layout } from "@/components/containers/common/Layout";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { kanit, poppins, syne } from "@/lib/helpers/fonts";
@@ -24,7 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${poppins.variable} ${kanit.variable} ${syne.variable} h-full antialiased`}>
       <body className="min-h-full bg-white text-ink">
-        <Layout>{children}</Layout>
+        {children}
       </body>
     </html>
   );

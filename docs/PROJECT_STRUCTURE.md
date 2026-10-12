@@ -7,44 +7,42 @@ organisation is preserved.
 
 ```text
 netpuppys-site/
-├── public/
-│   └── images/                 # Site imagery
+├── public/images/
+│   ├── brand, hero, home, team, work, clients, blog, testimonials, shapes/  # homepage art
+│   └── wp/<yyyy>/<mm>/<file>    # images mirrored from the WordPress media library
+├── scripts/gen-image-sizes.py   # regenerates src/lib/data/wp-image-sizes.ts (needs Pillow)
 ├── src/
-│   ├── app/                    # App Router routes (Next.js file-system routing)
-│   │   ├── layout.tsx          # Root layout — fonts, metadata, wraps <Layout>
-│   │   ├── page.tsx            # Homepage (/) — composes section components
-│   │   └── globals.css re-export lives in src/styles/
+│   ├── app/
+│   │   ├── layout.tsx           # Root: <html>/<body>, fonts, Font Awesome CSS
+│   │   ├── (site)/              # Pages with the main Header/Footer/FloatingContact
+│   │   │   ├── layout.tsx
+│   │   │   ├── page.tsx         # Homepage
+│   │   │   ├── about-us, meet-the-team, careers, contact, free-audit, thankyou,
+│   │   │   ├── our-work, success-stories, marketing-solutions,
+│   │   │   ├── marketing-solutions/[slug]   # 8 service pages (static params)
+│   │   │   └── terms-conditions, privacy-policy, refund-policy
+│   │   ├── (landing)/           # Ad landing pages with their own minimal header/footer
+│   │   │   └── digital-marketing-agency/
+│   │   └── api/contact/route.ts # Lead form endpoint (see "Contact form" below)
 │   │
 │   ├── components/
-│   │   ├── common/              # Atomic, reusable UI primitives
-│   │   │   ├── Button/          # Solid / outline / ghost variants, used everywhere
-│   │   │   ├── Card/            # "What We Do" service tile
-│   │   │   ├── Diamond/         # Small rotated-square accent glyph
-│   │   │   ├── Logo/            # Site wordmark (header + footer)
-│   │   │   ├── SectionEyebrow/  # Underlined caption above section headings
-│   │   │   └── icons/           # Inline SVG icon set
-│   │   │
+│   │   ├── common/              # Primitives: Button, Eyebrow, SectionTitle, Carousel,
+│   │   │                          FaIcon, CountUp, Reveal, StarRating, dividers, ...
 │   │   └── containers/
-│   │       ├── common/           # Structural layout containers, used app-wide
-│   │       │   ├── Container/    # Max-width + gutter wrapper
-│   │       │   ├── Wrapper/      # Vertical section spacing
-│   │       │   ├── Header/       # Utility bar + nav + mobile menu
-│   │       │   ├── Footer/       # Link columns + contact + social
-│   │       │   └── Layout/       # Wraps every page with Header + main + Footer
-│   │       │
-│   │       └── pages-component/  # Page-specific section components
-│   │           └── home/         # Homepage-only sections (Hero, Programmes, ...)
-│   │
+│   │       ├── common/          # Container, Header, Footer, Layout
+│   │       ├── shared/          # Sections reused across pages: InnerHero, InnerPage,
+│   │       │                      ProofSection, TestimonialsSection, ClientLogosSection,
+│   │       │                      IconCardGrid, BannerBand, CtaPanel, ContactForm, ...
+│   │       └── pages-component/ # Page-only sections: home, about, team, careers,
+│   │                              contact, our-work, success-stories, service,
+│   │                              solutions, legal, landing
 │   ├── lib/
-│   │   ├── data/                # Static content (home-content.ts) — copy lives
-│   │   │                          here, not hardcoded in components
-│   │   └── helpers/              # fonts.ts and other non-UI utilities
-│   │
-│   ├── styles/
-│   │   └── globals.css          # Tailwind v4 entry + brand color tokens
-│   │
-│   └── types/
-│       └── site.d.ts            # Shared content/prop types
+│   │   ├── data/                # ALL copy: home-content.ts, site-content.ts (nav/footer),
+│   │   │   │                      services.ts (8 service pages), wp-image-sizes.ts
+│   │   │   └── pages/           # One file per inner page (about.ts, careers.ts, ...)
+│   │   └── helpers/images.ts    # wp(path, alt) -> {src,width,height,alt}
+│   ├── styles/globals.css       # Tailwind v4 + brand tokens
+│   └── types/site.d.ts
 ```
 
 ## Conventions
@@ -62,11 +60,16 @@ netpuppys-site/
 - **Path aliases** (`tsconfig.json`): `@/*` → `src/*`, plus the
   `@/components/*`, `@/containers/*`, `@/lib/*`, `@/styles/*`, `@/types/*`
   shortcuts from the original doc.
-- **Routing**: new pages are added as `src/app/<route>/page.tsx` (App Router
+- **Routing**: new pages are added as `src/app/(site)/<route>/page.tsx` (App Router
   file convention) — there is no `src/pages/` in this project.
+
+- **Images**: put new WordPress images under `public/images/wp/...`, run
+  `python3 scripts/gen-image-sizes.py`, then reference them via `wp('2024/05/x.webp', 'alt')`.
+- **Contact form**: `ContactForm` posts to `/api/contact`, then redirects to `/thankyou`.
+  Set `RESEND_API_KEY` + `CONTACT_TO_EMAIL` (optional `CONTACT_FROM_EMAIL`) to email
+  leads, or `FORM_WEBHOOK_URL` to forward JSON. With neither set, leads are only logged.
 
 ## Status
 
-Empty skeleton cloned from the MCMCER project structure. The component
-folders listed above are the target layout — create each primitive
-(`Button/Button.tsx` + `Button/index.ts`, etc.) as it's needed.
+All pages except the blog have been ported from netpuppys.com (26 static routes).
+The blog is pending a headless-WordPress decision.

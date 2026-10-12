@@ -1,4 +1,4 @@
-import type { CtaLink, NavLink, SocialLink } from "@/types/site";
+import type { CtaLink, MegaMenuLink, NavLink, SocialLink } from "@/types/site";
 
 /** Site-wide content shared by Header / Footer on every route. */
 
@@ -13,7 +13,7 @@ export const mobileTopBar: CtaLink = { label: "Get a free audit", href: "/contac
 
 export const navLinks: NavLink[] = [
   { label: "Home", href: "/" },
-  { label: "Marketing Solutions", href: "/marketing-solutions" },
+  { label: "Marketing Solutions", href: "/marketing-solutions", mega: true },
   {
     label: "Who We Are",
     href: "/about-us",
@@ -26,6 +26,27 @@ export const navLinks: NavLink[] = [
   { label: "Our Work", href: "/our-work" },
   { label: "Contact", href: "/contact" },
 ];
+
+/** Marketing Solutions mega-menu (two columns, same order + icons as the live site). */
+export const solutionsMenu: { columns: MegaMenuLink[][]; explore: CtaLink } = {
+  columns: [
+    [
+      { label: "Web Development", href: "/marketing-solutions/web-development", icon: "code" },
+      { label: "Social Media Marketing", href: "/marketing-solutions/social-media-marketing", icon: "search" },
+      { label: "Performance Marketing", href: "/marketing-solutions/performance-marketing", icon: "chartBarSolid" },
+      { label: "UGC Content Creation", href: "/marketing-solutions/ugc-content-creation", icon: "camera" },
+      { label: "AI Content Creation", href: "/marketing-solutions/ai-content-creation", icon: "codeBranch" },
+    ],
+    [
+      { label: "Search Engine Optimization", href: "/marketing-solutions/search-engine-optimization", icon: "chartPie" },
+      { label: "Influencer Marketing", href: "/marketing-solutions/influencer-marketing", icon: "male" },
+      { label: "Branding & Product Shoot", href: "/marketing-solutions/branding-product-shoot", icon: "checkCircleOutline" },
+      // No Video Productions page exists on the live site yet (its link is "#").
+      { label: "Video Productions", href: "/marketing-solutions", icon: "fileVideoOutline" },
+    ],
+  ],
+  explore: { label: "Explore all solutions", href: "/marketing-solutions" },
+};
 
 export const footerCta = {
   title: "Your Brand's Been a Good Boy. It's High Time to Launch your Biggest Marketing Campaign.",

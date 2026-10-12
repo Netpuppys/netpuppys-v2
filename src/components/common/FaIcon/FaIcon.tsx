@@ -1,7 +1,26 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import { faUser, faChartBar, faFaceGrinWink } from "@fortawesome/free-regular-svg-icons";
-import { faLaptopCode, faChartLine, faCameraRetro } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faChartBar, faFaceGrinWink, faCircleCheck as faCircleCheckRegular, faFileVideo as faFileVideoRegular, faMap, faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
+import {
+  faLaptopCode,
+  faChartLine,
+  faCameraRetro,
+  faLightbulb,
+  faRocket,
+  faCircleCheck,
+  faMagnifyingGlass,
+  faCamera,
+  faCodeBranch,
+  faChartPie,
+  faChild,
+  faSquareCheck,
+  faFileVideo,
+  faPodcast,
+  faPhotoFilm,
+  faChartColumn,
+  faCode,
+  faPerson,
+} from "@fortawesome/free-solid-svg-icons";
 import { faSistrix } from "@fortawesome/free-brands-svg-icons";
 import type { IconKey } from "@/types/site";
 
@@ -13,6 +32,25 @@ const icons: Record<IconKey, IconDefinition> = {
   sistrix: faSistrix,
   chartLine: faChartLine,
   cameraRetro: faCameraRetro,
+  lightbulb: faLightbulb,
+  map: faMap,
+  starOutline: faStarRegular,
+  rocket: faRocket,
+  checkCircle: faCircleCheck,
+  checkCircleOutline: faCircleCheckRegular,
+  search: faMagnifyingGlass,
+  camera: faCamera,
+  codeBranch: faCodeBranch,
+  chartPie: faChartPie,
+  child: faChild,
+  checkSquare: faSquareCheck,
+  fileVideo: faFileVideo,
+  podcast: faPodcast,
+  photoVideo: faPhotoFilm,
+  chartBarSolid: faChartColumn,
+  code: faCode,
+  male: faPerson,
+  fileVideoOutline: faFileVideoRegular,
 };
 
 interface FaIconProps {

@@ -17,16 +17,30 @@ const box = (x: number, y: number, w: number, h: number) => ({
   height: pct(h, 576),
 });
 
-export const HeroSection: React.FC = () => {
-  const { images } = hero;
+type HeroContent = typeof hero;
+
+interface HeroSectionProps {
+  /** Override copy/images (the landing page uses its own headline and speaker image). */
+  content?: HeroContent;
+  /** Smaller 35px headline used on the landing page. */
+  compactTitle?: boolean;
+}
+
+export const HeroSection: React.FC<HeroSectionProps> = ({ content = hero, compactTitle = false }) => {
+  const { images } = content;
 
   return (
     <section className="bg-gradient-to-b from-hero to-[rgba(247,247,250,0)] pb-10 md:pb-0 lg:-mt-[81px] lg:pt-[81px]">
       <Container className="pt-10 text-center md:pt-[51px]">
-        <h1 className="font-display text-[45px] font-semibold leading-[1.1] tracking-[-1px] text-ink md:text-[55px]">
-          {hero.title}
+        <h1
+          className={[
+            "font-display font-semibold leading-[1.1] tracking-[-1px] text-ink",
+            compactTitle ? "text-[30px] md:text-[35px]" : "text-[45px] md:text-[55px]",
+          ].join(" ")}
+        >
+          {content.title}
         </h1>
-        <p className="mt-5 text-[22px] font-normal capitalize leading-[1.3] text-body">{hero.subtitle}</p>
+        <p className={["mt-5 text-[22px] font-normal leading-[1.3] text-body", compactTitle ? "" : "capitalize"].join(" ")}>{content.subtitle}</p>
       </Container>
 
       {/* ≥ md: the original collage */}
@@ -80,12 +94,12 @@ export const HeroSection: React.FC = () => {
             className="absolute flex items-center justify-between rounded-[3.9cqw] bg-coral px-[2.8cqw]"
             style={box(371, 376, 358, 185)}
           >
-            <p className="w-[10.2cqw] text-left text-[1.5625cqw] font-normal leading-[1.3] text-body">{hero.audit.text}</p>
+            <p className="w-[10.2cqw] text-left text-[1.5625cqw] font-normal leading-[1.3] text-body">{content.audit.text}</p>
             <Button
-              href={hero.audit.cta.href}
+              href={content.audit.cta.href}
               className="!h-[3.6cqw] !gap-[0.6cqw] !rounded-[1.4cqw] !px-[2.27cqw] !text-[0.94cqw]"
             >
-              {hero.audit.cta.label}
+              {content.audit.cta.label}
             </Button>
           </div>
         </div>
@@ -106,8 +120,8 @@ export const HeroSection: React.FC = () => {
           <Image src={images.dog.src} alt={images.dog.alt} width={images.dog.width} height={images.dog.height} priority sizes="28vw" className="w-[26%]" />
         </div>
         <div className="mt-6 flex flex-col items-center gap-5 rounded-[50px] bg-coral px-8 py-8 text-center">
-          <p className="max-w-[150px] text-[20px] font-normal leading-[1.3] text-body">{hero.audit.text}</p>
-          <Button href={hero.audit.cta.href}>{hero.audit.cta.label}</Button>
+          <p className="max-w-[150px] text-[20px] font-normal leading-[1.3] text-body">{content.audit.text}</p>
+          <Button href={content.audit.cta.href}>{content.audit.cta.label}</Button>
         </div>
         <Image src={images.right.src} alt={images.right.alt} width={images.right.width} height={images.right.height} sizes="100vw" className="mt-6 w-full" />
       </Container>
