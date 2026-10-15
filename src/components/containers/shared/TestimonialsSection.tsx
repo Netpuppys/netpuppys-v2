@@ -22,6 +22,8 @@ interface TestimonialsSectionProps {
   /** Pull the card up over the foot of the proof section (homepage). */
   overlap?: boolean;
   reviewsLabel?: string;
+  /** false hides "View all reviews" (landing page: no links to other pages). */
+  reviewsLink?: boolean;
   className?: string;
 }
 
@@ -32,6 +34,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
   tone = "white",
   overlap = false,
   reviewsLabel = defaultTestimonials.reviews.label,
+  reviewsLink = true,
   className = "",
 }) => {
   const peach = tone === "peach";
@@ -90,10 +93,12 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
               </div>
               <SlashDivider className="hidden lg:block" />
               <AvatarStack avatars={defaultTestimonials.reviews.avatars} className="lg:ml-[61px]" />
-              <Link href={defaultTestimonials.reviews.cta.href} className="group inline-flex items-center gap-2.5 text-base font-normal tracking-[-0.2px] text-ink lg:ml-5">
-                <span className="hover-fill">{defaultTestimonials.reviews.cta.label}</span>
-                <FontAwesomeIcon icon={faArrowRight} className="text-base" />
-              </Link>
+              {reviewsLink && (
+                <Link href={defaultTestimonials.reviews.cta.href} className="group inline-flex items-center gap-2.5 text-base font-normal tracking-[-0.2px] text-ink lg:ml-5">
+                  <span className="hover-fill">{defaultTestimonials.reviews.cta.label}</span>
+                  <FontAwesomeIcon icon={faArrowRight} className="text-base" />
+                </Link>
+              )}
             </div>
           </div>
         </div>

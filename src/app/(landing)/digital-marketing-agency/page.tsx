@@ -10,19 +10,23 @@ export const metadata: Metadata = {
   description: "Growth-focused performance marketing agency. ROI-driven campaigns across Google, Meta, LinkedIn, TikTok, Snapchat and more.",
 };
 
-/** Paid-traffic landing page — homepage sections with a lead form instead of site navigation. */
+/**
+ * Paid-traffic landing page — homepage sections with a lead form instead of
+ * site navigation. Deliberately has NO links to other pages (only on-page
+ * anchors, phone and email) so ad visitors stay on the form.
+ */
 export default function DigitalMarketingAgencyPage() {
   return (
     <>
       <HeroSection content={landingHero} compactTitle />
-      <HeroStatsSection />
-      <WhatWeDoSection id="what-we-do" />
-      <ServicesSection id="services" items={landingServices} showCta={false} />
+      <HeroStatsSection expertsHref="#contact" />
+      <WhatWeDoSection id="what-we-do" showCta={false} />
+      <ServicesSection id="services" items={landingServices} showCta={false} linked={false} />
       <WhyChooseSection id="why-choose-us" cta={bookCall} />
       <ClientLogosSection />
       <ProofSection cta={bookCall} className="mt-0" />
       <LandingContactSection />
-      <TestimonialsSection className="mt-[60px]" />
+      <TestimonialsSection className="mt-[60px]" reviewsLink={false} />
     </>
   );
 }

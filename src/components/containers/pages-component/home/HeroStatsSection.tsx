@@ -16,14 +16,15 @@ const MobileDivider = () => (
 );
 
 /** Experts · revenue · reviews row under the hero, sitting on the offset wave hairline. */
-export const HeroStatsSection: React.FC = () => (
+/** `expertsHref` overrides the "Connect our experts" target (the landing page keeps it on-page: "#contact"). */
+export const HeroStatsSection: React.FC<{ expertsHref?: string }> = ({ expertsHref = heroStats.experts.href }) => (
   <section
     className="mt-[41px] bg-[url(/images/shapes/border-center.svg)] bg-[position:50%_100%] bg-no-repeat pb-[86px] md:mt-[15px] md:bg-[url(/images/shapes/border.svg)] md:pb-[84px]"
   >
     <Container className="flex flex-col items-center gap-[26px] text-center md:flex-row md:items-start md:justify-between md:gap-4 md:text-left">
       <div className="flex flex-col items-center gap-[7px] md:flex-row md:gap-[15px]">
         <AvatarStack avatars={heroStats.experts.avatars} />
-        <Link href={heroStats.experts.href} className="group inline-flex items-center gap-3 text-base font-normal leading-[20.8px] tracking-[-0.2px] text-ink">
+        <Link href={expertsHref} className="group inline-flex items-center gap-3 text-base font-normal leading-[20.8px] tracking-[-0.2px] text-ink">
           <span className="hover-fill">{heroStats.experts.label}</span>
           <FontAwesomeIcon icon={faAngleRight} className="text-base" />
         </Link>

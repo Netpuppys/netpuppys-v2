@@ -5,7 +5,8 @@ import { SectionTitle } from "@/components/common/SectionTitle";
 import { Container } from "@/components/containers/common/Container";
 import { whatWeDo } from "@/lib/data/home-content";
 
-export const WhatWeDoSection: React.FC<{ id?: string }> = ({ id }) => (
+/** `showCta={false}` hides "More about us" (landing page: no links to other pages). */
+export const WhatWeDoSection: React.FC<{ id?: string; showCta?: boolean }> = ({ id, showCta = true }) => (
   <section id={id} className="mt-[50px] scroll-mt-24 md:mt-[70px]">
     <Container>
       <div className="grid gap-5 md:gap-6 lg:grid-cols-[640px_1fr] lg:gap-0">
@@ -15,9 +16,11 @@ export const WhatWeDoSection: React.FC<{ id?: string }> = ({ id }) => (
         </div>
         <div className="lg:ml-auto lg:max-w-[512px] lg:pt-[60px]">
           <p className="text-base font-light leading-6 text-body">{whatWeDo.description}</p>
-          <Button href={whatWeDo.cta.href} variant="link" className="mt-[30px]">
-            {whatWeDo.cta.label}
-          </Button>
+          {showCta && (
+            <Button href={whatWeDo.cta.href} variant="link" className="mt-[30px]">
+              {whatWeDo.cta.label}
+            </Button>
+          )}
         </div>
       </div>
 

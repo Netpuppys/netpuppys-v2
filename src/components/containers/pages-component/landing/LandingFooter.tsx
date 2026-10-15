@@ -1,6 +1,4 @@
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faInstagram, faLinkedin, faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { Button } from "@/components/common/Button";
 import { Eyebrow } from "@/components/common/Eyebrow";
 import { WaveDivider } from "@/components/common/WaveDivider";
@@ -8,15 +6,7 @@ import { Container } from "@/components/containers/common/Container";
 import { bookCall } from "@/lib/data/pages/landing";
 import { contact, footerCta } from "@/lib/data/site-content";
 
-// TODO: confirm the LinkedIn and YouTube URLs.
-const socials = [
-  { label: "Instagram", href: "https://www.instagram.com/netpuppys/", icon: faInstagram },
-  { label: "Facebook", href: "https://www.facebook.com/netpuppys/", icon: faFacebook },
-  { label: "LinkedIn", href: "#", icon: faLinkedin },
-  { label: "YouTube", href: "#", icon: faYoutube },
-];
-
-/** Landing-page footer: the CTA card from the main site, then a slim copyright + social bar. */
+/** Landing-page footer: the CTA card from the main site, then a slim copyright bar (no links to other pages or sites). */
 export const LandingFooter: React.FC = () => (
   <footer className="mt-10 lg:mt-[10px]">
     <Container>
@@ -54,15 +44,6 @@ export const LandingFooter: React.FC = () => (
       </div>
       <div className="flex flex-col gap-4 bg-peach px-6 py-3 sm:flex-row sm:items-start sm:justify-between md:px-[60px] lg:h-20">
         <p className="pt-3 text-base font-light text-body">© {new Date().getFullYear()} Netpuppys. All rights reserved.</p>
-        <ul className="flex gap-[5px]">
-          {socials.map((s) => (
-            <li key={s.label}>
-              <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} className="flex h-10 w-10 items-center justify-center text-ink hover:text-orange">
-                <FontAwesomeIcon icon={s.icon} className="text-xl" />
-              </a>
-            </li>
-          ))}
-        </ul>
       </div>
     </Container>
   </footer>

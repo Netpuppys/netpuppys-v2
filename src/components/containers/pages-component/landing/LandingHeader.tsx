@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faPhone, faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -24,9 +23,8 @@ export const LandingHeader: React.FC = () => {
   return (
     <header className={["sticky top-0 z-40 transition-colors", scrolled || open ? "bg-white shadow-[0_2px_20px_rgba(0,0,0,0.06)]" : "bg-white lg:bg-transparent"].join(" ")}>
       <Container className="flex h-[72px] items-center justify-between lg:h-[81px]">
-        <Link href="/" aria-label="Netpuppys home">
-          <Image src="/images/brand/logo.png" alt="Netpuppys" width={480} height={194} priority className="h-[58px] w-auto lg:h-[81px]" />
-        </Link>
+        {/* Not a link — the landing page keeps visitors on the page. */}
+        <Image src="/images/brand/logo.png" alt="Netpuppys" width={480} height={194} priority className="h-[58px] w-auto lg:h-[81px]" />
         <nav aria-label="Page sections" className="hidden items-center gap-8 lg:flex">
           {landingNav.map((l) => (
             <a key={l.href} href={l.href} className="text-base font-normal uppercase text-ink hover:text-orange">
