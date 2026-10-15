@@ -6,6 +6,7 @@ import { useState, type FormEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Sparkle } from "@/components/common/Sparkle";
+import { HCaptcha } from "./HCaptcha";
 
 export type ContactField = "name" | "email" | "company" | "website" | "phone" | "service" | "budget" | "message";
 
@@ -103,10 +104,16 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   className = "",
 }) => {
   const router = useRouter();
-  const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "error" | "captcha">("idle");
+  const [captchaToken, setCaptchaToken] = useState("");
+  const [captchaReset, setCaptchaReset] = useState(0);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (WEB3FORMS_KEY && !captchaToken) {
+      setStatus("captcha");
+      return;
+    }
     setStatus("sending");
     const data = Object.fromEntries([...new FormData(e.currentTarget).entries()].map(([k, v]) => [k, String(v)]));
     try {
@@ -114,6 +121,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       router.push("/thankyou");
     } catch {
       setStatus("error");
+      // hCaptcha tokens are single-use — ask for a fresh tick before retrying.
+      setCaptchaToken("");
+      setCaptchaReset((n) => n + 1);
     }
   };
 
@@ -183,6 +193,15 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           })}
           {/* Honeypot — real visitors never see or fill this. */}
           <input type="text" name="company_url" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+          {WEB3FORMS_KEY && (
+            <HCaptcha
+              resetSignal={captchaReset}
+              onVerify={(t) => {
+                setCaptchaToken(t);
+                if (t) setStatus((s) => (s === "captcha" ? "idle" : s));
+              }}
+            />
+          )}
           <button
             type="submit"
             disabled={status === "sending"}
@@ -191,6 +210,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({
             <span className="hover-fill [--fill:rgba(176,167,239,0.35)]">{status === "sending" ? "Sending…" : submitLabel}</span>
             <FontAwesomeIcon icon={faArrowRight} className="text-xs" />
           </button>
+          {status === "captcha" && (
+            <p role="alert" className="text-sm text-[#c0392b]">
+              Please tick &ldquo;I am human&rdquo; before sending.
+            </p>
+          )}
           {status === "error" && (
             <p role="alert" className="text-sm text-[#c0392b]">
               Something went wrong — please call us on +91 9266707333 or try again.
