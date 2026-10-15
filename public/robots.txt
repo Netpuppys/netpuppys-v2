@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Internal search pages
+Disallow: /?s=
+Disallow: /search/
+
+# Disallow Temporary & System Directories
+Disallow: /tmp/
+Disallow: /temp/
+Disallow: /cache/
+Disallow: /private/
+Disallow: /backup/
+
+# Disallow Tracking & UTM Parameters
+Disallow: /*?utm_
+Disallow: /*?ref=
+Disallow: /*?source=
+Disallow: /*?campaign=
+
+# XML Sitemap
+Sitemap: https://netpuppys.com/sitemap.xml

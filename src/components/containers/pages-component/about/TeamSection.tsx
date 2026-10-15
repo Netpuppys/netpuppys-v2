@@ -14,15 +14,15 @@ const socialStyle = {
 
 /** "Meet the Netpuppys revolutionaries" — title left, founder cards with social squares right. */
 export const TeamSection: React.FC = () => (
-  <section className="mt-[50px]">
-    <Container className="grid gap-10 lg:grid-cols-[418px_1fr] lg:gap-[50px]">
+  <section className="mt-[36px] lg:mt-[50px]">
+    <Container className="grid gap-[69px] lg:grid-cols-[418px_1fr] lg:gap-[50px]">
       <div className="lg:pt-[31px]">
         <Eyebrow as="h2">{aboutTeam.eyebrow}</Eyebrow>
         <SectionTitle className="mt-5 lg:mt-[81px]">{aboutTeam.title}</SectionTitle>
       </div>
       <ul className="grid gap-10 sm:grid-cols-2 lg:flex lg:gap-10 lg:pt-5">
         {aboutTeam.members.map((m) => (
-          <li key={m.image.src} className="lg:w-[376px]">
+          <li key={m.image.src} className="max-sm:px-5 lg:w-[376px]">
             <Image src={m.image.src} alt={m.image.alt} width={m.image.width} height={m.image.height} sizes="376px" className="aspect-square w-full" />
             <ul className="mt-[5px] flex gap-[5px]">
               {m.socials.map((s) => (

@@ -5,6 +5,7 @@ import { ClientLogosSection, ProofSection, TestimonialsSection } from "@/contain
 import { bookCall, landingHero, landingServices } from "@/lib/data/pages/landing";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/digital-marketing-agency/" },
   title: "Top Trusted Digital Marketing Agency in India | Netpuppys",
   description: "Growth-focused performance marketing agency. ROI-driven campaigns across Google, Meta, LinkedIn, TikTok, Snapchat and more.",
 };

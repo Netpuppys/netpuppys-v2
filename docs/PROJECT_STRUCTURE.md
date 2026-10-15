@@ -20,10 +20,13 @@ netpuppys-site/
 │   │   │   ├── about-us, meet-the-team, careers, contact, free-audit, thankyou,
 │   │   │   ├── our-work, success-stories, marketing-solutions,
 │   │   │   ├── marketing-solutions/[slug]   # 8 service pages (static params)
-│   │   │   └── terms-conditions, privacy-policy, refund-policy
+│   │   │   ├── terms-conditions, privacy-policy, refund-policy
+│   │   │   ├── blogs/                   # Blog listing (WordPress)
+│   │   │   └── blog/[slug]/             # Single post (WordPress), same URLs as before
 │   │   ├── (landing)/           # Ad landing pages with their own minimal header/footer
 │   │   │   └── digital-marketing-agency/
-│   │   └── api/contact/route.ts # Lead form endpoint (see "Contact form" below)
+│   │   ├── api/contact/route.ts # Lead form endpoint (see "Contact form" below)
+│   │   └── api/revalidate/route.ts # Refresh blog cache after publishing in WordPress
 │   │
 │   ├── components/
 │   │   ├── common/              # Primitives: Button, Eyebrow, SectionTitle, Carousel,
@@ -40,7 +43,9 @@ netpuppys-site/
 │   │   ├── data/                # ALL copy: home-content.ts, site-content.ts (nav/footer),
 │   │   │   │                      services.ts (8 service pages), wp-image-sizes.ts
 │   │   │   └── pages/           # One file per inner page (about.ts, careers.ts, ...)
-│   │   └── helpers/images.ts    # wp(path, alt) -> {src,width,height,alt}
+│   │   ├── helpers/images.ts    # wp(path, alt) -> {src,width,height,alt}
+│   │   └── wordpress/           # Headless WordPress: REST client, Elementor HTML cleaner,
+│   │                              Yoast -> metadata, date formats
 │   ├── styles/globals.css       # Tailwind v4 + brand tokens
 │   └── types/site.d.ts
 ```
@@ -69,7 +74,15 @@ netpuppys-site/
   Set `RESEND_API_KEY` + `CONTACT_TO_EMAIL` (optional `CONTACT_FROM_EMAIL`) to email
   leads, or `FORM_WEBHOOK_URL` to forward JSON. With neither set, leads are only logged.
 
+- **Blog (headless WordPress)**: posts are written in the old WordPress admin and
+  read over the REST API (`src/lib/wordpress`). Pages cache for 1 hour; to show a new
+  post instantly, have WordPress call `POST /api/revalidate?secret=WORDPRESS_REVALIDATE_SECRET`
+  on publish. Elementor markup is stripped to clean HTML (`lib/wordpress/html.ts`) and
+  styled by `.wp-content` in globals.css; the Table of Contents is rebuilt from headings.
+  Yoast SEO title/description/canonical/OG/schema are reused. Settings: see `.env.example`.
+  Before pointing netpuppys.com at this site, move WordPress to a subdomain
+  (e.g. cms.netpuppys.com) and set `WORDPRESS_URL` to it.
+
 ## Status
 
-All pages except the blog have been ported from netpuppys.com (26 static routes).
-The blog is pending a headless-WordPress decision.
+All pages have been ported from netpuppys.com; the blog is served from WordPress (headless).

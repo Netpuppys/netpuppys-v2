@@ -6,9 +6,9 @@ import { Container } from "@/components/containers/common/Container";
 import { whatWeDo } from "@/lib/data/home-content";
 
 export const WhatWeDoSection: React.FC<{ id?: string }> = ({ id }) => (
-  <section id={id} className="mt-[70px] scroll-mt-24">
+  <section id={id} className="mt-[50px] scroll-mt-24 md:mt-[70px]">
     <Container>
-      <div className="grid gap-6 lg:grid-cols-[640px_1fr] lg:gap-0">
+      <div className="grid gap-5 md:gap-6 lg:grid-cols-[640px_1fr] lg:gap-0">
         <div>
           <Eyebrow as="h2">{whatWeDo.eyebrow}</Eyebrow>
           <SectionTitle className="mt-5 max-w-[640px]">{whatWeDo.title}</SectionTitle>
@@ -21,13 +21,13 @@ export const WhatWeDoSection: React.FC<{ id?: string }> = ({ id }) => (
         </div>
       </div>
 
-      <div className="mt-[70px] grid gap-[30px] md:grid-cols-3 lg:gap-[45px]">
+      <div className="mt-[50px] grid gap-5 md:mt-[70px] md:grid-cols-3 md:gap-[30px] lg:gap-[45px]">
         {whatWeDo.pillars.map((p) => (
-          <article key={p.title} className="relative rounded-[50px] border border-line px-[31px] pb-[45px] pt-[58px] lg:min-h-[336px]">
+          <article key={p.title} className="relative rounded-[50px] border border-line px-[31px] pb-[45px] pt-[87px] md:pt-[58px] lg:min-h-[336px]">
             <span className="absolute right-[31px] top-[31px] flex h-[70px] w-[70px] items-center justify-center rounded-full bg-peach text-orange">
               <FaIcon name={p.icon} className="text-[30px]" />
             </span>
-            <h3 className="max-w-[201px] font-display text-[28px] font-bold leading-[1.2] tracking-[-0.6px] text-ink">{p.title}</h3>
+            <h3 className="max-w-[262px] font-display text-[19px] font-bold leading-[26.6px] tracking-[-0.6px] text-ink md:max-w-[201px] md:text-[28px] md:leading-[1.2]">{p.title}</h3>
             <p className="mt-5 text-base font-light leading-6 text-body">{p.description}</p>
           </article>
         ))}

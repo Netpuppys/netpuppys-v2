@@ -7,10 +7,10 @@ import type { ServicePage } from "@/types/site";
 /** Opening statement (left) and the deliverables checklist (right), separated by a hairline. */
 export const ServiceIntro: React.FC<{ intro: ServicePage["intro"] }> = ({ intro }) => (
   <section>
-    <Container className="grid gap-10 lg:grid-cols-[577px_1fr] lg:gap-[100px]">
+    <Container className="grid gap-[26px] lg:grid-cols-[577px_1fr] lg:gap-[100px]">
       <div className="lg:pt-[22px]">
         <SectionTitle>{intro.title}</SectionTitle>
-        <RichText html={intro.html} className="mt-[30px] text-base font-light leading-6 text-body" />
+        <RichText html={intro.html} className="mt-5 text-base font-light leading-6 text-body lg:mt-[30px]" />
       </div>
       <ul className="flex flex-col gap-5 border-line lg:border-l lg:pl-[83px] lg:pt-[26px]">
         {intro.checklist.map((item) => (

@@ -5,12 +5,12 @@ import { offices } from "@/lib/data/pages/contact";
 
 /** "Office Address" heading and the two peach office cards. */
 export const OfficesSection: React.FC = () => (
-  <section>
+  <section className="mb-5 lg:mb-0">
     <Container>
       <SectionTitle>{offices.title}</SectionTitle>
-      <ul className="mt-10 grid gap-[30px] md:grid-cols-2">
+      <ul className="mt-5 grid gap-5 md:grid-cols-2 md:gap-[30px] lg:mt-10">
         {offices.items.map((o) => (
-          <li key={o.label} className="rounded-[34px] bg-peach px-10 pb-10 pt-10 lg:min-h-[280px]">
+          <li key={o.label} className="min-h-[260px] rounded-[34px] bg-peach px-[30px] pb-10 pt-[26px] md:px-10 md:pt-10 lg:min-h-[280px]">
             <span className="flex h-[60px] w-[60px] items-center justify-center rounded-full bg-white">
               <MapPin />
             </span>

@@ -4,6 +4,7 @@ import { ContactForm, Credentials, DividerBlock, InnerHero, InnerPage } from "@/
 import { formPagesImage, freeAudit } from "@/lib/data/pages/contact";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/free-audit/" },
   title: "Free Audit - Netpuppys",
   description: "Get a free marketing audit from Netpuppys — we review your goals, audience, website and content.",
 };

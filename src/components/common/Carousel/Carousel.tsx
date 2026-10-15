@@ -14,7 +14,8 @@ interface CarouselProps {
   gap?: number;
   autoplay?: number | false;
   loop?: boolean;
-  slidesToScroll?: number;
+  /** Slides per swipe; "auto" = as many as are fully visible (e.g. 1 on mobile, 2 on desktop). */
+  slidesToScroll?: number | "auto";
   dots?: boolean;
   /** "ink" = 6px black dots (default); "orange" = 12px orange/blush dots. */
   dotsTone?: "ink" | "orange";

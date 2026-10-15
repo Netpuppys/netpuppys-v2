@@ -15,28 +15,28 @@ interface ClientLogosSectionProps {
 export const ClientLogosSection: React.FC<ClientLogosSectionProps> = ({
   title = clients.title,
   titleStyle = "eyebrow",
-  className = "mt-[100px]",
+  className = "mt-[50px] lg:mt-[100px]",
 }) => (
   <section className={className}>
     <Container>
       {titleStyle === "eyebrow" ? (
-        <Eyebrow as="h2" className="text-center">
+        <Eyebrow as="h2" className="px-5 text-center md:px-0">
           {title}
         </Eyebrow>
       ) : (
-        <h2 className="font-display text-[30px] font-semibold leading-[1.1] tracking-[-1.5px] text-ink lg:text-[40px]">{title}</h2>
+        <h2 className="px-5 font-display text-[40px] font-semibold leading-[1.1] tracking-[-2px] text-ink md:px-0">{title}</h2>
       )}
       <Carousel
         label="Client logos"
-        slideClassName="basis-1/2 md:basis-1/3 lg:basis-1/4"
+        slideClassName="basis-[90%] sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
         gap={20}
         autoplay={5000}
         arrows="edge"
-        className={titleStyle === "eyebrow" ? "mt-[20px]" : "mt-[53px]"}
+        className={titleStyle === "eyebrow" ? "mt-[20px]" : "mt-[28px] lg:mt-[53px]"}
       >
         {clients.logos.map((logo, i) => (
-          <div key={`${logo.src}-${i}`} className="flex h-[170px] items-center justify-center">
-            <Image src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} sizes="305px" className="w-full" />
+          <div key={`${logo.src}-${i}`} className="flex h-[195px] items-center justify-center md:h-[170px]">
+            <Image src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} sizes="(min-width: 768px) 305px, 350px" className="max-h-full w-full object-contain" />
           </div>
         ))}
       </Carousel>

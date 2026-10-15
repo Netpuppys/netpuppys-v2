@@ -4,6 +4,7 @@ import { ContactForm, DividerBlock, InnerHero, InnerPage } from "@/containers/sh
 import { contactPage, formPagesImage } from "@/lib/data/pages/contact";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/contact/" },
   title: "Contact - Netpuppys",
   description: "Call +91 9266707333, email digital@netpuppys.com or send us a message — we’d love to hear about your business.",
 };
@@ -21,7 +22,7 @@ export default function ContactPage() {
       >
         <ContactDetails />
       </InnerHero>
-      <DividerBlock className="mb-[80px] mt-20" />
+      <DividerBlock className="mb-[80px] mt-10 lg:mt-20" />
       <OfficesSection />
     </InnerPage>
   );

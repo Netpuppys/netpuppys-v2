@@ -13,3 +13,4 @@ export { Credentials } from "./Credentials";
 export { ContactForm } from "./ContactForm";
 export { DividerBlock } from "./DividerBlock";
 export { InnerPage } from "./InnerPage";
+export { BlogCard, type BlogCardData } from "./BlogCard";

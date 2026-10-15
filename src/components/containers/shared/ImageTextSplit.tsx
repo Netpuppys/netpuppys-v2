@@ -42,11 +42,11 @@ export const ImageTextSplit: React.FC<ImageTextSplitProps> = ({
   );
   return (
     <section className={className}>
-      <Container className="grid items-center gap-10 lg:grid-cols-2 lg:gap-0">
+      <Container className="grid items-center gap-[27px] lg:grid-cols-2 lg:gap-0">
         {imageSide === "left" ? img : null}
         <div className={["lg:max-w-[512px]", imageSide === "left" ? "lg:ml-auto lg:w-[512px] lg:pr-2" : ""].join(" ")}>
-          <h3 className="font-display text-[30px] font-medium leading-[1.1] tracking-[-1.5px] text-ink lg:text-[40px] lg:tracking-[-2px]">{title}</h3>
-          <RichText html={html} className="mt-[30px] text-base font-light leading-6 text-body" />
+          <h3 className="font-display text-[26px] font-medium leading-[1.1] tracking-[-1px] text-ink lg:text-[40px] lg:tracking-[-2px]">{title}</h3>
+          <RichText html={html} className="mt-5 text-base font-light leading-6 text-body lg:mt-[30px]" />
           {link && (
             <Button href={link.href} variant="link" className="mt-[30px]">
               {link.label}

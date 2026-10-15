@@ -55,9 +55,9 @@ export const Header: React.FC = () => {
           isScrolled || isMenuOpen ? "bg-white shadow-[0_2px_20px_rgba(0,0,0,0.06)]" : "bg-white lg:bg-transparent",
         ].join(" ")}
       >
-        <Container className="relative flex h-[72px] items-center justify-between lg:h-[81px]">
+        <Container className="relative flex h-[61px] items-center justify-between lg:h-[81px]">
           <Link href="/" aria-label="Netpuppys home" className="shrink-0">
-            <Image src="/images/brand/logo.png" alt="Netpuppys" width={480} height={194} priority className="h-[58px] w-auto lg:h-[81px]" />
+            <Image src="/images/brand/logo.png" alt="Netpuppys" width={480} height={194} priority className="h-[60px] w-auto lg:h-[81px]" />
           </Link>
 
           <nav aria-label="Main" className="hidden h-full items-center gap-6 lg:flex">

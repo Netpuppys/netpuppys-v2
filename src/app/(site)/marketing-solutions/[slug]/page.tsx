@@ -23,7 +23,11 @@ export async function generateMetadata({ params }: PageProps<"/marketing-solutio
   const { slug } = await params;
   const service = getService(slug);
   if (!service) return {};
-  return { title: `${service.title} - Netpuppys`, description: service.hero.text.slice(0, 155) };
+  return {
+    title: `${service.title} - Netpuppys`,
+    description: service.hero.text.slice(0, 155),
+    alternates: { canonical: `/marketing-solutions/${service.slug}/` },
+  };
 }
 
 /** One template for all eight service pages (WordPress "single page" template 5043). */
@@ -46,15 +50,15 @@ export default async function ServicePageRoute({ params }: PageProps<"/marketing
       <DividerBlock className="mb-[100px] mt-5" />
 
       <ServiceIntro intro={s.intro} />
-      <CenteredHeading eyebrow={s.secret.eyebrow} title={s.secret.title} width="max-w-[845px]" className="mt-[100px]" />
-      <ImageTextSplit image={s.showcase.image} title={s.showcase.title} html={s.showcase.html} className="mt-20" />
+      <CenteredHeading eyebrow={s.secret.eyebrow} title={s.secret.title} width="max-w-[845px]" className="mt-[55px] lg:mt-[100px]" />
+      <ImageTextSplit image={s.showcase.image} title={s.showcase.title} html={s.showcase.html} className="mt-5 lg:mt-20" />
 
       {/* Experts: copy left, dashboard image right */}
-      <section className="mt-20">
-        <Container className="grid items-center gap-10 lg:grid-cols-[512px_1fr] lg:gap-0">
+      <section className="mt-[56px] lg:mt-20">
+        <Container className="grid items-center gap-[27px] lg:grid-cols-[512px_1fr] lg:gap-0">
           <div>
-            <h3 className="font-display text-[30px] font-medium leading-10 tracking-[-1.5px] text-ink lg:text-[40px] lg:tracking-[-2px]">{s.experts.title}</h3>
-            <RichText html={s.experts.html} className="mt-[30px] text-base font-light leading-6 text-body" />
+            <h3 className="font-display text-[26px] font-medium leading-[1.1] tracking-[-2px] text-ink lg:text-[40px] lg:leading-10">{s.experts.title}</h3>
+            <RichText html={s.experts.html} className="mt-5 text-base font-light leading-6 text-body lg:mt-[30px]" />
           </div>
           <Image
             src={serviceExpertsImage.src}
@@ -62,21 +66,21 @@ export default async function ServicePageRoute({ params }: PageProps<"/marketing
             width={serviceExpertsImage.width}
             height={serviceExpertsImage.height}
             sizes="(min-width: 1320px) 614px, 100vw"
-            className="w-full rounded-[30px] lg:ml-auto lg:w-[614px] lg:rounded-[40px]"
+            className="order-first w-full rounded-[30px] lg:order-none lg:ml-auto lg:w-[614px] lg:rounded-[40px]"
           />
         </Container>
       </section>
 
-      <DividerBlock className="my-[100px]" />
+      <DividerBlock className="my-[53px] lg:my-[100px]" />
       <CenteredHeading eyebrow={s.included.eyebrow} title={s.included.title} text={s.included.text} />
 
       {/* Tabs straddle the top of a blush → white band that holds the "formula" cards */}
-      <section className="relative mt-[60px]">
+      <section className="relative mt-[31px] lg:mt-[60px]">
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0 top-[120px] bg-gradient-to-b from-blush to-white" />
         <div className="relative">
           <ServiceTabs tabs={s.tabs} />
-          <CenteredHeading eyebrow={s.formula.eyebrow} title={s.formula.title} width="max-w-[768px]" className="mt-[140px]" />
-          <Container className="mt-10">
+          <CenteredHeading eyebrow={s.formula.eyebrow} title={s.formula.title} width="max-w-[768px]" className="mt-[59px] lg:mt-[140px]" />
+          <Container className="mt-[30px] lg:mt-10">
             <IconCardGrid
               cols={3}
               cards={s.formula.cards.map((c) => ({ ...c, icon: "checkCircleOutline" as const }))}
@@ -87,8 +91,8 @@ export default async function ServicePageRoute({ params }: PageProps<"/marketing
         </div>
       </section>
 
-      <CenteredHeading eyebrow={s.numbers.eyebrow} title={s.numbers.title} className="mt-[130px]" />
-      <StatCards stats={s.numbers.stats} className="mt-10" />
+      <CenteredHeading eyebrow={s.numbers.eyebrow} title={s.numbers.title} className="mt-[31px] lg:mt-[130px]" />
+      <StatCards stats={s.numbers.stats} className="mt-5 lg:mt-10" />
 
       {s.faq && (
         <>
@@ -97,7 +101,7 @@ export default async function ServicePageRoute({ params }: PageProps<"/marketing
         </>
       )}
 
-      <CtaPanel title={serviceCta.title} cta={serviceCta.cta} className="mt-[130px]" />
+      <CtaPanel title={serviceCta.title} cta={serviceCta.cta} className="mt-[156px] lg:mt-[130px]" />
     </InnerPage>
   );
 }

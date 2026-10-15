@@ -6,7 +6,7 @@ import { contactPage } from "@/lib/data/pages/contact";
 /** Phone / email card and the address pill under the Contact hero copy. */
 export const ContactDetails: React.FC = () => (
   <>
-    <div className="mt-5 flex flex-col gap-6 rounded-[30px] bg-white px-[30px] py-10 sm:flex-row sm:items-start sm:gap-0 lg:w-[640px]">
+    <div className="mt-[30px] flex flex-col gap-6 rounded-[30px] bg-white px-5 py-10 sm:px-[30px] lg:mt-5 sm:flex-row sm:items-start sm:gap-0 lg:w-[640px]">
       {[contactPage.phone, contactPage.email].map((c, i) => (
         <div key={c.label} className={["flex items-start", i === 0 ? "sm:w-[290px]" : ""].join(" ")}>
           <div className="flex-1">
@@ -19,8 +19,8 @@ export const ContactDetails: React.FC = () => (
         </div>
       ))}
     </div>
-    <div className="mt-[30px] flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-[130px]">
-      <div className="flex items-center gap-5 rounded-[34px] bg-white pr-6 sm:w-[352px]">
+    <div className="mt-[19px] flex flex-col gap-6 sm:mt-[30px] sm:flex-row sm:items-center sm:gap-[130px]">
+      <div className="flex items-center gap-5 rounded-[34px] bg-white py-[27px] pl-5 pr-6 sm:w-[352px] sm:py-0 sm:pl-0">
         <span className="flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-full bg-peach">
           <MapPin />
         </span>

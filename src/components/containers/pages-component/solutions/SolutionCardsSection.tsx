@@ -4,7 +4,7 @@ import { solutionCards } from "@/lib/data/pages/solutions";
 
 /** All nine service cards (4 · 4 · 1 centred) on the white → peach → white band. */
 export const SolutionCardsSection: React.FC = () => (
-  <section className="bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,#ffebdb_18%,#ffebdb_82%,#ffffff_100%)] pb-10 pt-[60px]">
+  <section className="bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,#ffebdb_18%,#ffebdb_82%,#ffffff_100%)] pb-10 pt-[26px] lg:pt-[60px]">
     <Container className="flex flex-col gap-5">
       <IconCardGrid cards={solutionCards.slice(0, 4)} showLink cardClassName="lg:min-h-[467px]" />
       <IconCardGrid cards={solutionCards.slice(4, 8)} showLink cardClassName="lg:min-h-[467px]" />

@@ -15,7 +15,37 @@ export const ServiceTabs: React.FC<{ tabs: ServicePage["tabs"] }> = ({ tabs }) =
 
   return (
     <Container>
-      <div className="relative overflow-hidden rounded-[30px] bg-ink lg:min-h-[517px] lg:rounded-[50px]">
+      {/* < lg: Elementor's accordion — active title as an orange pill with its peach panel below */}
+      <div className="rounded-[50px] bg-ink px-5 py-[30px] lg:hidden">
+        {tabs.map((t, i) => (
+          <div key={t.title}>
+            <button
+              type="button"
+              aria-expanded={i === active}
+              aria-controls={`svc-acc-${i}`}
+              onClick={() => setActive(i)}
+              className={[
+                "block w-full py-5 pl-5 pr-[50px] text-left font-display text-lg font-bold leading-[19.8px] tracking-[-0.6px] text-white",
+                i === active ? "rounded-[50px] bg-orange" : "",
+              ].join(" ")}
+            >
+              {t.title}
+            </button>
+            {i === active && (
+              <div id={`svc-acc-${i}`} className="mt-[9px] rounded-[40px] bg-peach px-5 pb-[30px] pt-[46px]">
+                <h3 className="font-display text-[26px] font-medium leading-[1.1] tracking-[-1px] text-ink">{t.title}</h3>
+                <p className="mt-2 text-base font-light leading-6 text-ink">{t.text}</p>
+                <Button href="/contact" className="mt-[25px]">
+                  Get a Free audit
+                </Button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* ≥ lg: vertical tabs */}
+      <div className="relative hidden min-h-[517px] overflow-hidden rounded-[50px] bg-ink lg:block">
         <div role="tablist" aria-label="What's included" aria-orientation="vertical" className="flex flex-col gap-1 p-5 lg:w-[464px] lg:gap-[25px] lg:px-10 lg:py-[50px]">
           {tabs.map((t, i) => (
             <button

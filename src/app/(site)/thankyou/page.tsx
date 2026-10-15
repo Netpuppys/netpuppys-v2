@@ -4,6 +4,7 @@ import { Container } from "@/components/containers/common/Container";
 import { thankYou } from "@/lib/data/pages/contact";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/thankyou/" },
   title: "Thankyou - Netpuppys",
   robots: { index: false },
 };

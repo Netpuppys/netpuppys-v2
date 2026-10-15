@@ -30,12 +30,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ content = hero, compac
   const { images } = content;
 
   return (
-    <section className="bg-gradient-to-b from-hero to-[rgba(247,247,250,0)] pb-10 md:pb-0 lg:-mt-[81px] lg:pt-[81px]">
-      <Container className="pt-10 text-center md:pt-[51px]">
+    <section className="bg-gradient-to-b from-hero to-[rgba(247,247,250,0)] lg:-mt-[81px] lg:pt-[81px]">
+      <Container className="pt-[53px] text-center md:pt-[51px]">
         <h1
           className={[
             "font-display font-semibold leading-[1.1] tracking-[-1px] text-ink",
-            compactTitle ? "text-[30px] md:text-[35px]" : "text-[45px] md:text-[55px]",
+            compactTitle ? "text-[30px] md:text-[35px]" : "text-[55px]",
           ].join(" ")}
         >
           {content.title}
@@ -105,25 +105,40 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ content = hero, compac
         </div>
       </Container>
 
-      {/* < md: stacked, as on the WordPress mobile layout */}
+      {/* < md: stacked, as on the WordPress mobile layout (speaker + dog, then the coral audit card) */}
       <Container className="md:hidden">
-        <Image src="/images/hero/line-arrow.svg" alt="" width={236} height={55} className="ml-auto mt-8 w-2/3" />
-        <div className="relative mt-4 flex items-end gap-2">
-          <div className="relative w-[72%]">
+        <Image src="/images/hero/line-arrow.svg" alt="" width={236} height={55} className="mx-auto mt-[43px] w-[236px]" />
+        <div className="relative mt-[5px] flex items-start">
+          <div className="relative h-[230px] w-[72%]">
             <div
               aria-hidden="true"
-              className="absolute inset-x-0 bottom-0 top-[14%] bg-contain bg-bottom bg-no-repeat"
+              className="absolute bottom-0 left-0 top-[14%] w-full bg-contain bg-left-bottom bg-no-repeat"
               style={{ backgroundImage: `url(${images.leftBase.src})` }}
             />
-            <Image src={images.speaker.src} alt={images.speaker.alt} width={images.speaker.width} height={images.speaker.height} priority sizes="72vw" className="relative w-full" />
+            <Image
+              src={images.speaker.src}
+              alt={images.speaker.alt}
+              width={images.speaker.width}
+              height={images.speaker.height}
+              priority
+              sizes="72vw"
+              className="relative h-full w-full object-contain object-left-bottom"
+            />
           </div>
-          <Image src={images.dog.src} alt={images.dog.alt} width={images.dog.width} height={images.dog.height} priority sizes="28vw" className="w-[26%]" />
+          <Image
+            src={images.dog.src}
+            alt={images.dog.alt}
+            width={images.dog.width}
+            height={images.dog.height}
+            priority
+            sizes="82px"
+            className="-mt-1 h-[203px] w-[21%] object-contain object-top"
+          />
         </div>
-        <div className="mt-6 flex flex-col items-center gap-5 rounded-[50px] bg-coral px-8 py-8 text-center">
+        <div className="mt-[22px] flex flex-col items-center gap-[10px] rounded-[30px] bg-coral p-[27px] text-center">
           <p className="max-w-[150px] text-[20px] font-normal leading-[1.3] text-body">{content.audit.text}</p>
           <Button href={content.audit.cta.href}>{content.audit.cta.label}</Button>
         </div>
-        <Image src={images.right.src} alt={images.right.alt} width={images.right.width} height={images.right.height} sizes="100vw" className="mt-6 w-full" />
       </Container>
     </section>
   );

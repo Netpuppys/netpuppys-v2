@@ -15,13 +15,13 @@ export const OpenPositionsSection: React.FC = () => (
         , and let’s start a conversation about how your talents can align with our exciting opportunities. We can’t wait to hear from you!
       </p>
     </Container>
-    <Container className="mt-[50px]">
+    <Container className="mt-[31px] md:mt-[50px]">
       <ul className="mx-auto flex max-w-[1060px] flex-col gap-5">
         {openPositions.jobs.map((j, i) => (
           <li key={`${j.title}-${i}`}>
-            <a href={j.href} target="_blank" rel="noopener noreferrer" className="group block rounded-[30px] bg-peach px-10 py-10 hover:bg-blush">
-              <span className="block font-display text-xl font-bold leading-7 tracking-[-0.6px] text-ink group-hover:text-orange">{j.title}</span>
-              <span className="mt-1 block text-base font-light leading-6 text-body">{j.meta}</span>
+            <a href={j.href} target="_blank" rel="noopener noreferrer" className="group block rounded-[30px] bg-peach px-5 pb-5 pt-7 hover:bg-blush md:p-10">
+              <span className="block font-display text-lg font-bold leading-[19.8px] tracking-[-0.6px] text-ink group-hover:text-orange max-md:max-w-[260px] md:text-xl md:leading-7">{j.title}</span>
+              <span className="mt-[3px] block md:mt-1 text-base font-light leading-6 text-body">{j.meta}</span>
             </a>
           </li>
         ))}

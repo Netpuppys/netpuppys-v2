@@ -5,10 +5,10 @@ import { executiveTeam, leadership } from "@/lib/data/pages/team";
 
 /** Leadership cards, a hairline, then the (currently empty) Executive Team heading — as on WordPress. */
 export const LeadershipSection: React.FC = () => (
-  <section className="mt-[120px]">
+  <section className="mt-[70px] lg:mt-[120px]">
     <Container>
       <SectionTitle>{leadership.title}</SectionTitle>
-      <ul className="mt-[30px] grid gap-5 sm:grid-cols-2 lg:flex">
+      <ul className="mt-20 grid gap-5 max-sm:-mx-5 sm:grid-cols-2 md:mt-[30px] lg:flex">
         {leadership.people.map((p) => (
           <li key={p.src} className="lg:w-[413px]">
             <Image src={p.src} alt={p.alt} width={p.width} height={p.height} sizes="413px" className="aspect-square w-full rounded-[30px]" />
@@ -16,7 +16,7 @@ export const LeadershipSection: React.FC = () => (
         ))}
       </ul>
       <hr className="mt-[50px] border-line" />
-      <SectionTitle className="mt-[120px]">{executiveTeam.title}</SectionTitle>
+      <SectionTitle className="mt-[60px] lg:mt-[120px]">{executiveTeam.title}</SectionTitle>
     </Container>
   </section>
 );

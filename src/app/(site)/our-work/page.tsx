@@ -4,6 +4,7 @@ import { InnerHero, InnerPage, ProofSection } from "@/containers/shared";
 import { caseStudies, ourWorkHero } from "@/lib/data/pages/our-work";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/our-work/" },
   title: "Our Work - Netpuppys",
   description: "Case studies: the campaigns that got our clients attention, conversions and measurable ROI.",
 };

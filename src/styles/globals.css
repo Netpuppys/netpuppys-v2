@@ -65,3 +65,80 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .hover-fill { transition: none; }
 }
+
+/* ---------------------------------------------------------------------------
+   WordPress post content (cleaned Elementor HTML, see lib/wordpress/html.ts).
+   Sizes match the live single-post template: Kanit 16/24 body, Poppins
+   headings (in-content H1 66px, H2 48px, H3 40px, H4 28px).
+   ------------------------------------------------------------------------ */
+.wp-content {
+  padding: 0 10px;
+  color: var(--color-body);
+  font-size: 16px;
+  line-height: 24px;
+  overflow-wrap: anywhere;
+}
+.wp-content > :first-child { margin-top: 0; }
+.wp-content p { margin: 0 0 16px; }
+.wp-content strong { font-weight: 700; }
+.wp-content em, .wp-content i { font-style: italic; }
+.wp-content a { color: inherit; text-decoration: none; transition: color 0.2s; }
+.wp-content a:hover { color: var(--color-orange); }
+.wp-content h2, .wp-content h3, .wp-content h4, .wp-content h5, .wp-content h6 {
+  font-family: var(--font-display), sans-serif;
+  color: var(--color-ink);
+  margin: 40px 0 20px;
+  scroll-margin-top: 110px;
+  overflow-wrap: normal;
+}
+.wp-content h2.wp-h1 { font-size: 38px; line-height: 1.1; font-weight: 600; letter-spacing: -1px; margin-top: 30px; }
+.wp-content h2 { font-size: 30px; line-height: 1.1; font-weight: 600; letter-spacing: -1px; }
+.wp-content h3 { font-size: 26px; line-height: 1.1; font-weight: 500; letter-spacing: -1px; }
+.wp-content h4 { font-size: 22px; line-height: 1.2; font-weight: 700; letter-spacing: -0.6px; color: var(--color-body); margin: 30px 0 14px; }
+.wp-content h5 { font-size: 18px; line-height: 1.3; font-weight: 700; margin: 24px 0 12px; }
+.wp-content h6 { font-size: 16px; line-height: 1.4; font-weight: 700; margin: 20px 0 10px; }
+@media (min-width: 1024px) {
+  .wp-content h2.wp-h1 { font-size: 66px; line-height: 72.6px; letter-spacing: -1px; }
+  .wp-content h2 { font-size: 48px; line-height: 52.8px; letter-spacing: -2px; }
+  .wp-content h3 { font-size: 40px; line-height: 40px; letter-spacing: -2px; }
+  .wp-content h4 { font-size: 28px; line-height: 33.6px; }
+}
+.wp-content ul, .wp-content ol { margin: 16px 0; padding-left: 27px; }
+.wp-content ul { list-style: disc; }
+.wp-content ol { list-style: decimal; }
+.wp-content li { margin: 0 0 8px; }
+.wp-content li > ul, .wp-content li > ol { margin: 8px 0; }
+.wp-content img { max-width: 100%; height: auto; border-radius: 30px; margin: 24px auto; }
+.wp-content figure { margin: 24px 0; }
+.wp-content figcaption { font-size: 14px; text-align: center; margin-top: 8px; }
+.wp-content blockquote { border-left: 3px solid var(--color-orange); padding: 4px 0 4px 20px; margin: 24px 0; font-style: italic; }
+.wp-content table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 15px; display: block; overflow-x: auto; }
+.wp-content th, .wp-content td { border: 1px solid var(--color-line); padding: 10px 14px; text-align: left; vertical-align: top; color: #383838; }
+.wp-content th, .wp-content tr:first-child td { background: var(--color-blush); font-weight: 500; }
+.wp-content hr { border: 0; border-top: 1px solid var(--color-line); margin: 32px 0; }
+.wp-content .wp-embed { width: 100%; aspect-ratio: 16 / 9; border-radius: 30px; margin: 24px 0; }
+.wp-content .wp-button {
+  display: inline-flex; align-items: center; height: 46px; padding: 0 29px; border-radius: 18px;
+  background: var(--color-ink); color: #fff; text-decoration: none;
+  font-family: var(--font-syne), sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.2px;
+}
+.wp-content .wp-button:hover { color: #fff; background: var(--color-orange); }
+
+/* Table of Contents box (rebuilt from the post headings). */
+.wp-content .wp-toc { border: 1px solid #9da5ae; margin: 30px 0; }
+.wp-content .wp-toc summary {
+  list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 20px; border-bottom: 1px solid #9da5ae;
+  font-family: var(--font-display), sans-serif; font-size: 22px; line-height: 1.2; font-weight: 700; letter-spacing: -0.6px;
+}
+@media (min-width: 1024px) { .wp-content .wp-toc summary { font-size: 28px; line-height: 33.6px; } }
+.wp-content .wp-toc summary::-webkit-details-marker { display: none; }
+.wp-content .wp-toc summary::after { content: ""; width: 9px; height: 9px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-135deg); margin-top: 5px; transition: transform 0.2s; }
+.wp-content .wp-toc:not([open]) summary { border-bottom: 0; }
+.wp-content .wp-toc:not([open]) summary::after { transform: rotate(45deg); margin-top: -5px; }
+.wp-content .wp-toc nav { padding: 12px 20px 16px; }
+.wp-content .wp-toc ol { list-style: none; margin: 0; padding: 0; }
+.wp-content .wp-toc ol ol { padding-left: 20px; }
+.wp-content .wp-toc li { margin: 0; }
+.wp-content .wp-toc a { display: block; padding: 3px 0; color: var(--color-body); text-decoration: none; font-size: 15px; line-height: 22px; }
+.wp-content .wp-toc a:hover { color: var(--color-orange); }

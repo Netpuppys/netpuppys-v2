@@ -51,27 +51,30 @@ export const InnerHero: React.FC<InnerHeroProps> = ({
   className = "",
 }) => (
   <section className={["lg:pt-[60px]", className].join(" ")}>
-    <Container className="grid gap-10 pt-10 lg:grid-cols-[640px_1fr] lg:gap-0 lg:pt-0">
+    <Container className="grid gap-[30px] pt-[50px] lg:grid-cols-[640px_1fr] lg:gap-0 lg:pt-0">
       <div className="lg:pt-[38px]">
         {eyebrow && <Eyebrow as="h2">{eyebrow}</Eyebrow>}
         <h1
           className={[
-            eyebrow ? "mt-5" : "lg:mt-[42px]",
-            "font-display font-semibold leading-[1.1] text-ink",
+            eyebrow ? "mt-[15px] lg:mt-5" : "lg:mt-[42px]",
+            "font-display font-semibold text-ink lg:leading-[1.1]",
             titleWidth,
-            titleSize === "lg" ? "text-[44px] tracking-[-1.5px] lg:text-[66px] lg:tracking-[-2px]" : "text-[38px] tracking-[-1.5px] lg:text-[50px] lg:tracking-[-2px]",
+            // Mobile sizes follow the live site: 66px titles drop to 32px, the 50px ones stay 50px.
+            titleSize === "lg"
+              ? "text-[32px] leading-[35.2px] tracking-[-1px] lg:text-[66px] lg:tracking-[-2px]"
+              : "text-[50px] leading-[55px] tracking-[-1px] lg:tracking-[-2px]",
           ].join(" ")}
         >
           {title}
         </h1>
         {lead && (
-          <p className={["mt-[30px] text-xl font-normal leading-[26px] text-ink", leadWidth].join(" ")}>{lead}</p>
+          <p className={["mt-5 text-xl font-normal leading-[26px] text-ink lg:mt-[30px]", leadWidth].join(" ")}>{lead}</p>
         )}
         {leadHtml && (
           <RichText
             html={leadHtml}
             className={[
-              "mt-[30px]",
+              "mt-5 lg:mt-[30px]",
               leadStyle === "body" ? "text-base font-light leading-6 text-body" : "text-xl font-normal leading-[26px] text-ink",
               leadWidth,
             ].join(" ")}
@@ -92,7 +95,7 @@ export const InnerHero: React.FC<InnerHeroProps> = ({
           height={image.height}
           priority
           sizes="(min-width: 1320px) 518px, (min-width: 1024px) 40vw, 100vw"
-          className={["aspect-[518/470] w-full rounded-[30px] object-cover lg:ml-auto lg:w-[518px] lg:rounded-[50px]", imageClassName].join(" ")}
+          className={["aspect-[390/301] w-full rounded-[50px] object-cover lg:ml-auto lg:aspect-[518/470] lg:w-[518px]", imageClassName].join(" ")}
         />
       )}
     </Container>

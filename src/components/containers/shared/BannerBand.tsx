@@ -26,17 +26,17 @@ export const BannerBand: React.FC<BannerBandProps> = ({ image, title, from = "pe
         from === "peach" ? "from-peach" : "from-[#e9e5ff]",
       ].join(" ")}
     />
-    <Container className="relative pb-[120px]">
+    <Container className="relative pb-[30px] lg:pb-[120px]">
       <Image
         src={image.src}
         alt={image.alt}
         width={image.width}
         height={image.height}
         sizes="(min-width: 1320px) 1280px, 100vw"
-        className="aspect-[1280/528] w-full rounded-[30px] object-cover lg:rounded-[50px]"
+        className="h-[172px] w-full rounded-[30px] object-cover md:aspect-[1280/528] md:h-auto lg:rounded-[50px]"
       />
-      <SectionTitle className="mx-auto mt-[96px] max-w-[768px] text-center">{title}</SectionTitle>
-      <div className="mt-10">{children}</div>
+      <SectionTitle className="mx-auto mt-7 max-w-[234px] text-center md:max-w-[768px] lg:mt-[96px]">{title}</SectionTitle>
+      <div className="mt-6 lg:mt-10">{children}</div>
     </Container>
   </section>
 );

@@ -49,7 +49,7 @@ export const Button: React.FC<ButtonProps> = ({
     <Link
       href={href}
       className={[
-        "group inline-flex h-[46px] items-center justify-center gap-2 whitespace-nowrap rounded-[18px] bg-ink px-[29px] font-syne text-xs font-bold uppercase leading-[20.4px] tracking-[-0.2px] text-white",
+        "group inline-flex h-[44px] items-center justify-center gap-2 whitespace-nowrap rounded-[18px] bg-ink px-[28px] font-syne text-xs font-bold uppercase leading-[20.4px] tracking-[-0.2px] text-white md:h-[46px] md:px-[29px]",
         className,
       ].join(" ")}
     >

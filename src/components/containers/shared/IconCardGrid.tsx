@@ -17,11 +17,11 @@ interface IconCardGridProps {
 export const IconCardGrid: React.FC<IconCardGridProps> = ({ cards, cols = 4, showLink = false, cardClassName = "", className = "" }) => (
   <div className={["grid gap-5 sm:grid-cols-2", cols === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3 lg:gap-[30px]", className].join(" ")}>
     {cards.map((c) => (
-      <article key={c.title} className={["flex flex-col rounded-[34px] bg-white px-[30px] pb-[35px] pt-10", cardClassName].join(" ")}>
+      <article key={c.title} className={["flex flex-col rounded-[34px] bg-white px-[30px] pb-[31px] pt-10 lg:pb-[35px]", cardClassName].join(" ")}>
         <span className="flex h-16 w-16 items-center justify-center rounded-full bg-peach text-orange">
           <FaIcon name={c.icon} className="text-2xl" />
         </span>
-        <h3 className="mt-[25px] font-display text-xl font-bold leading-6 tracking-[-0.6px] text-ink">
+        <h3 className="mt-[15px] font-display text-lg font-bold leading-[19.8px] tracking-[-0.6px] text-ink lg:mt-[25px] lg:text-xl lg:leading-6">
           {c.href ? (
             <Link href={c.href} className="hover:text-orange">
               {c.title}
@@ -30,7 +30,7 @@ export const IconCardGrid: React.FC<IconCardGridProps> = ({ cards, cols = 4, sho
             c.title
           )}
         </h3>
-        <p className="mt-[18px] flex-1 text-base font-light leading-6 text-body">{c.description}</p>
+        <p className="mt-5 flex-1 text-base font-light leading-6 text-body lg:mt-[18px]">{c.description}</p>
         {showLink && c.href && (
           <Button href={c.href} variant="link" className="mt-6 self-start">
             Learn more

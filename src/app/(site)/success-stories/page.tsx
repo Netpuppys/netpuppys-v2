@@ -4,6 +4,7 @@ import { InnerHero, InnerPage, TestimonialsSection } from "@/containers/shared";
 import { successHero, successTestimonials } from "@/lib/data/pages/success-stories";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/success-stories/" },
   title: "Success Stories - Netpuppys",
   description: "See how our digital marketing solutions drive results for clients.",
 };
@@ -19,7 +20,7 @@ export default function SuccessStoriesPage() {
         items={successTestimonials}
         tone="peach"
         reviewsLabel="5000+ Client reviews"
-        className="mt-[120px]"
+        className="mt-[61px] lg:mt-[120px]"
       />
     </InnerPage>
   );

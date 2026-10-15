@@ -37,23 +37,23 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
   const peach = tone === "peach";
   return (
     <section className={["relative", overlap ? "-mt-[44px]" : "", className].join(" ")}>
-      <Container>
-        {heading && <SectionTitle className="mx-auto mb-10 max-w-[720px] text-center">{heading}</SectionTitle>}
+      <Container className="max-md:px-0">
+        {heading && <SectionTitle className="mx-auto mb-5 max-w-[720px] px-5 text-center md:mb-10 md:px-0">{heading}</SectionTitle>}
         <div
           className={[
             "grid grid-cols-1 lg:grid-cols-[704px_1fr]",
-            peach ? "rounded-[30px] bg-peach lg:rounded-[50px]" : "rounded-t-[30px] bg-white lg:rounded-t-[50px]",
+            peach ? "rounded-t-[50px] bg-peach md:rounded-[30px] lg:rounded-[50px]" : "rounded-t-[50px] bg-white md:rounded-t-[30px] lg:rounded-t-[50px]",
           ].join(" ")}
         >
-          <div className={["relative min-w-0 px-6 pb-16 pt-12 md:px-[62px] lg:pt-[60px]", peach ? "lg:min-h-[549px]" : "lg:min-h-[570px]"].join(" ")}>
+          <div className={["relative min-w-0 md:px-[62px] md:pb-16 md:pt-12 lg:pt-[60px]", peach ? "px-[30px] pb-16 pt-[30px] md:px-6 md:pt-12 lg:min-h-[549px]" : "px-[30px] pb-[123px] pt-[30px] lg:min-h-[570px]"].join(" ")}>
             {!peach && <FontAwesomeIcon icon={faQuoteLeft} className="text-[62px] text-orange" aria-hidden="true" />}
             <Carousel
               label="Client testimonials"
               slideClassName="basis-full"
               autoplay={5000}
               arrows="round"
-              arrowsClassName={peach ? "mt-8 lg:absolute lg:-left-[2px] lg:top-[275px] lg:mt-0" : "mt-8 lg:absolute lg:-left-[14px] lg:top-[351px] lg:mt-0"}
-              className={peach ? "mt-0 max-w-[538px] lg:mt-[154px]" : "mt-[47px] max-w-[510px] lg:min-h-[320px]"}
+              arrowsClassName={peach ? "mt-8 lg:absolute lg:-left-[2px] lg:top-[275px] lg:mt-0" : "mt-8 max-md:hidden lg:absolute lg:-left-[14px] lg:top-[351px] lg:mt-0"}
+              className={peach ? "mt-0 max-w-[538px] lg:mt-[154px]" : "mt-0 max-w-[510px] md:mt-[47px] lg:min-h-[320px]"}
             >
               {items.map((t) => (
                 <figure key={t.name}>
@@ -81,10 +81,10 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
             </Carousel>
           </div>
 
-          <div className="relative px-6 pb-12 lg:min-h-[549px] lg:px-0">
+          <div className={["relative lg:min-h-[549px] lg:px-0", peach ? "px-[30px] pb-10 md:px-6 md:pb-12" : "px-[30px] pb-10 md:px-6 md:pb-12"].join(" ")}>
             <Image src="/images/shapes/line-arrow-2.svg" alt="" width={340} height={329} className="absolute left-[118px] top-[66px] hidden lg:block" />
-            <div className="flex flex-wrap items-center gap-6 lg:absolute lg:left-0 lg:top-[410px] lg:gap-0">
-              <div className="lg:w-[184px]">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-4 md:gap-6 lg:absolute lg:left-0 lg:top-[410px] lg:gap-0">
+              <div className="w-full md:w-auto lg:w-[184px]">
                 <StarRating />
                 <p className="mt-1 text-base font-normal leading-[20.8px] text-ink">{reviewsLabel}</p>
               </div>

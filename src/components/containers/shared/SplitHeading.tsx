@@ -20,12 +20,12 @@ export const SplitHeading: React.FC<SplitHeadingProps> = ({ eyebrow, title, html
   <section className={className}>
     <Container>
       {eyebrow && <Eyebrow as="h2">{eyebrow}</Eyebrow>}
-      <div className={["grid gap-6 lg:grid-cols-[1fr_512px] lg:gap-10", eyebrow ? "mt-5" : ""].join(" ")}>
+      <div className={["grid gap-5 lg:grid-cols-[1fr_512px] lg:gap-10", eyebrow ? "mt-5" : ""].join(" ")}>
         <SectionTitle className={titleWidth}>{title}</SectionTitle>
         <div>
           <RichText html={html} className="text-base font-light leading-6 text-body" />
           {link && (
-            <Button href={link.href} variant="link" className="mt-[30px]">
+            <Button href={link.href} variant="link" className="mt-5 lg:mt-[30px]">
               {link.label}
             </Button>
           )}

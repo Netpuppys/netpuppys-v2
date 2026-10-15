@@ -12,7 +12,8 @@ export const WaveDivider: React.FC<WaveDividerProps> = ({ variant = "center", cl
     style={{
       backgroundImage: `url(/images/shapes/${variant === "center" ? "border-center" : "border"}.svg)`,
       backgroundPosition: "50% 100%",
-      backgroundSize: variant === "center" ? "100% auto" : "auto",
+      // Natural size (1281px), centred: narrow screens crop the hairline but keep the full bump, as on the live site.
+      backgroundSize: "auto",
     }}
   />
 );

@@ -36,9 +36,62 @@ const fieldClass =
 
 /**
  * Lead form used on Contact, Free Audit and the landing page. White card with
- * the theme's offset black shadow; posts to /api/contact and then sends the
- * visitor to /thankyou, like the Elementor form did.
+ * the theme's offset black shadow. Submits straight from the browser to
+ * Web3Forms (leads arrive by email) when NEXT_PUBLIC_WEB3FORMS_KEY is set,
+ * otherwise to /api/contact; then sends the visitor to /thankyou, like the
+ * Elementor form did.
  */
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+
+/** Readable labels for the lead email. */
+const emailLabels: Record<ContactField, string> = {
+  name: "Name",
+  email: "Email",
+  company: "Company",
+  website: "Website",
+  phone: "Phone",
+  service: "Service",
+  budget: "Budget",
+  message: "Message",
+};
+
+async function submitLead(data: Record<string, string>, source: string) {
+  // Honeypot: bots fill the hidden field — pretend success, send nothing.
+  if (data.company_url) return;
+  delete data.company_url;
+
+  if (!WEB3FORMS_KEY) {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...data, source }),
+    });
+    if (!res.ok) throw new Error(String(res.status));
+    return;
+  }
+
+  const fields = Object.fromEntries(
+    Object.entries(data)
+      .filter(([, v]) => v.trim() !== "")
+      .map(([k, v]) => [emailLabels[k as ContactField] ?? k, v]),
+  );
+  const res = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({
+      access_key: WEB3FORMS_KEY,
+      subject: `New lead from ${source} — netpuppys.com`,
+      from_name: "Netpuppys website",
+      replyto: data.email,
+      Source: source,
+      Page: window.location.href,
+      ...fields,
+    }),
+  });
+  const json = (await res.json().catch(() => ({}))) as { success?: boolean };
+  if (!res.ok || !json.success) throw new Error("Web3Forms submission failed");
+}
+
 export const ContactForm: React.FC<ContactFormProps> = ({
   source,
   fields = ["name", "email", "company", "phone", "message"],
@@ -55,14 +108,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("sending");
-    const data = Object.fromEntries(new FormData(e.currentTarget).entries());
+    const data = Object.fromEntries([...new FormData(e.currentTarget).entries()].map(([k, v]) => [k, String(v)]));
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, source }),
-      });
-      if (!res.ok) throw new Error(String(res.status));
+      await submitLead(data, source);
       router.push("/thankyou");
     } catch {
       setStatus("error");
@@ -88,7 +136,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       />
       <form
         onSubmit={onSubmit}
-        className="relative rounded-[40px] bg-white px-6 pb-10 pt-12 shadow-[10px_15px_0_0_rgba(0,0,0,0.69)] sm:px-[55px]"
+        className="relative rounded-[40px] bg-white px-5 pb-5 pt-[25px] shadow-[10px_15px_0_0_rgba(0,0,0,0.69)] max-sm:mr-[10px] sm:px-[55px] sm:pb-10 sm:pt-12"
       >
         {title && <h4 className="mb-[35px] font-display text-[28px] font-bold leading-[1.2] tracking-[-0.6px] text-ink">{title}</h4>}
         <div className="flex flex-col gap-5">

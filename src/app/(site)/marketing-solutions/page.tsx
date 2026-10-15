@@ -6,6 +6,7 @@ import { ClientLogosSection, CtaPanel, DividerBlock, ImageTextSplit, InnerHero, 
 import { commitment, solutionsCta, solutionsHero, solutionsIntro } from "@/lib/data/pages/solutions";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/marketing-solutions/" },
   title: "Marketing Solutions - Netpuppys",
   description: "Web development, SEO, performance marketing, social media, UGC, AI content, influencer marketing and branding — creative and performance under one roof.",
 };
@@ -21,18 +22,18 @@ export default function MarketingSolutionsPage() {
         cta={solutionsHero.cta}
         image={solutionsHero.image}
       />
-      <section className="mt-[130px]">
+      <section className="mt-[50px] lg:mt-[130px]">
         <Container className="text-center">
           <SectionTitle className="mx-auto max-w-[768px]">{solutionsIntro.title}</SectionTitle>
           <p className="mx-auto mt-5 max-w-[768px] text-base font-light leading-6 text-body">{solutionsIntro.text}</p>
         </Container>
       </section>
       <SolutionCardsSection />
-      <DividerBlock className="mb-20 mt-0" />
+      <DividerBlock className="mb-[50px] mt-0 lg:mb-20" />
       <ImageTextSplit image={commitment.image} title={commitment.title} html={commitment.html} link={commitment.link} />
-      <ProofSection corners="all" className="mt-20" />
+      <ProofSection corners="all" className="mt-[61px] lg:mt-20" />
       <ClientLogosSection />
-      <CtaPanel title={solutionsCta.title} cta={solutionsCta.cta} className="mt-[110px]" />
+      <CtaPanel title={solutionsCta.title} cta={solutionsCta.cta} className="mt-[127px] lg:mt-[110px]" />
     </InnerPage>
   );
 }
