@@ -18,7 +18,8 @@ export function postMetadata(post: Post): Metadata {
     title: { absolute: title },
     description,
     alternates: { canonical: withSlash(y.canonical) ?? `/blog/${post.slug}/` },
-    robots: y.robots ? { index: y.robots.index !== "noindex", follow: y.robots.follow !== "nofollow" } : undefined,
+    // Yoast robots are ignored on purpose: the WordPress install itself is set to noindex (so cms.netpuppys.com
+    // stays out of Google), and that must not leak onto the real pages.
     openGraph: {
       type: "article",
       title: y.og_title ?? title,

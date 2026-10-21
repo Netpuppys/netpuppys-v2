@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -103,7 +102,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   budgets = [],
   className = "",
 }) => {
-  const router = useRouter();
   const [status, setStatus] = useState<"idle" | "sending" | "error" | "captcha">("idle");
   const [captchaToken, setCaptchaToken] = useState("");
   const [captchaReset, setCaptchaReset] = useState(0);
@@ -118,7 +116,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({
     const data = Object.fromEntries([...new FormData(e.currentTarget).entries()].map(([k, v]) => [k, String(v)]));
     try {
       await submitLead(data, source);
-      router.push("/thankyou");
+      // Tell GTM/GA a lead was sent, then do a full page load of /thankyou/ so
+      // the existing "Thank You page view" conversion triggers fire as on WordPress.
+      const w = window as unknown as { dataLayer?: unknown[] };
+      (w.dataLayer ??= []).push({ event: "generate_lead", form_source: source });
+      window.location.assign("/thankyou/");
     } catch {
       setStatus("error");
       // hCaptcha tokens are single-use — ask for a fresh tick before retrying.

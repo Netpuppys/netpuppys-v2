@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import { Analytics, GtmNoScript } from "@/components/common/Analytics";
 import { kanit, poppins, syne } from "@/lib/helpers/fonts";
 import "@/styles/globals.css";
 
@@ -17,13 +18,17 @@ export const metadata: Metadata = {
     description: "Marketing Agency of the Year 2024. SEO, performance marketing, social media, web and UGC.",
     images: ["/images/hero/dog-award.png"],
   },
+  // Google Search Console ownership (same token as the WordPress site).
+  verification: { google: "xdMz5rqY-puNSnZgKUZvSsNPGDmesKXgyGIEhlAFz94" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${poppins.variable} ${kanit.variable} ${syne.variable} h-full antialiased`}>
       <body className="min-h-full bg-white text-ink">
+        <GtmNoScript />
         {children}
+        <Analytics />
       </body>
     </html>
   );

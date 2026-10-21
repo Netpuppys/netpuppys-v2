@@ -10,9 +10,12 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
 
   images: {
-    remotePatterns: [
-      { protocol: wordpress.protocol.replace(":", "") as "http" | "https", hostname: wordpress.hostname, pathname: "/wp-content/uploads/**" },
-    ],
+    // WordPress image host, plus the old one so images keep working while WordPress moves to cms.netpuppys.com.
+    remotePatterns: [...new Set([wordpress.hostname, "netpuppys.com", "cms.netpuppys.com"])].map((hostname) => ({
+      protocol: "https" as const,
+      hostname,
+      pathname: "/wp-content/uploads/**",
+    })),
   },
 
   /** 301s for WordPress URLs that have no page on the new site. Add any future slug changes here. */
