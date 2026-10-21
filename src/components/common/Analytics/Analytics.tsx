@@ -6,7 +6,9 @@ import Script from "next/script";
  * out of the reports.
  */
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID ?? "GTM-WFL568B5";
-const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID ?? "G-P3H8EZV6NS";
+// GA4 (G-P3H8EZV6NS) is fired by the GTM container's Google Tag — loading it here too would double-count.
+// Only set NEXT_PUBLIC_GA4_ID if GA4 is ever removed from GTM.
+const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID ?? "";
 const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID ?? "ocsuc6rozm";
 
 export const Analytics: React.FC = () => (
