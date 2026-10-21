@@ -23,6 +23,8 @@ const nextConfig: NextConfig = {
     const r = (source: string, destination: string) => ({ source, destination, statusCode: 301 as const });
     return [
       r("/home-2/", "/"),
+      // The site icon lives in WordPress; old-style /favicon.ico requests get the same image.
+      r("/favicon.ico", `${wordpress.origin}/wp-content/uploads/2025/09/cropped-netpuppy-icon-1-scaled-1-32x32.png`),
       // Blog archives (categories, tags, authors, feeds, bare /blog/) → the blog listing
       r("/blog/", "/blogs/"),
       r("/blog/category/:path*", "/blogs/"),
