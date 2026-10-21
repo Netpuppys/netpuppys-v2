@@ -8,11 +8,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight, faBars, faCaretDown, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components/common/Button";
 import { Container } from "@/components/containers/common/Container";
-import { mobileTopBar, navLinks, primaryCta } from "@/lib/data/site-content";
+import { mobileTopBar, navLinks, primaryCta, solutionsMenu } from "@/lib/data/site-content";
+import type { NavLink } from "@/types/site";
 import { MegaMenu } from "./MegaMenu";
 
 const navItem =
   "group relative flex items-center gap-1 font-syne text-sm font-semibold uppercase leading-[19.6px] tracking-[-0.17px] text-ink";
+
+/** Mobile menu: Marketing Solutions opens as an accordion listing "All solutions" + every service page. */
+const mobileLinks: NavLink[] = navLinks.map((l) =>
+  l.mega
+    ? {
+        ...l,
+        children: [
+          { label: "All Solutions", href: l.href },
+          ...solutionsMenu.columns.flat().map((s) => ({ label: s.label, href: s.href })),
+        ],
+      }
+    : l,
+);
 
 const mobileItem =
   "flex items-center px-10 py-[15px] font-sans text-base font-normal text-ink transition-colors hover:bg-peach";
@@ -25,12 +39,42 @@ export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [openSub, setOpenSub] = useState<string | null>(null);
+  /** Which desktop dropdown is open (hover/keyboard), so it can be closed after navigating. */
+  const [desktopOpen, setDesktopOpen] = useState<string | null>(null);
   const pathname = usePathname();
+  const isExact = (href: string) => pathname.replace(/\/$/, "") === href.replace(/\/$/, "");
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`));
   const closeMenu = () => {
     setIsMenuOpen(false);
     setOpenSub(null);
   };
+
+  // Close every menu whenever the page changes (state adjusted during render, as React recommends).
+  const [lastPath, setLastPath] = useState(pathname);
+  if (lastPath !== pathname) {
+    setLastPath(pathname);
+    setDesktopOpen(null);
+    setIsMenuOpen(false);
+    setOpenSub(null);
+  }
+
+  /** Hover/focus handlers for a desktop dropdown; clicking any link inside closes it. */
+  const dropdown = (label: string) => ({
+    onMouseEnter: () => setDesktopOpen(label),
+    onMouseLeave: () => setDesktopOpen(null),
+    onFocus: () => setDesktopOpen(label),
+    onBlur: (e: React.FocusEvent<HTMLDivElement>) => {
+      if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setDesktopOpen(null);
+    },
+    onClick: (e: React.MouseEvent<HTMLDivElement>) => {
+      if ((e.target as HTMLElement).closest("a")) {
+        setDesktopOpen(null);
+        (document.activeElement as HTMLElement | null)?.blur();
+      }
+    },
+  });
+  const panel = (label: string) =>
+    ["transition-all duration-200", desktopOpen === label ? "visible opacity-100" : "invisible opacity-0"].join(" ");
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 10);
@@ -63,21 +107,21 @@ export const Header: React.FC = () => {
           <nav aria-label="Main" className="hidden h-full items-center gap-6 lg:flex">
             {navLinks.map((link) =>
               link.mega ? (
-                <div key={link.label} className="group/mega flex h-full items-center">
-                  <Link href={link.href} className={navItem}>
+                <div key={link.label} className="flex h-full items-center" {...dropdown(link.label)}>
+                  <Link href={link.href} className={navItem} aria-expanded={desktopOpen === link.label}>
                     <span className="hover-fill [--fill:rgba(255,92,0,0.25)]">{link.label}</span>
                   </Link>
-                  <div className="invisible absolute inset-x-5 top-full pt-[3px] opacity-0 transition-all duration-200 group-focus-within/mega:visible group-focus-within/mega:opacity-100 group-hover/mega:visible group-hover/mega:opacity-100">
+                  <div className={["absolute inset-x-5 top-full pt-[3px]", panel(link.label)].join(" ")}>
                     <MegaMenu />
                   </div>
                 </div>
               ) : link.children ? (
-                <div key={link.label} className="group relative">
-                  <Link href={link.href} className={navItem}>
+                <div key={link.label} className="relative flex h-full items-center" {...dropdown(link.label)}>
+                  <Link href={link.href} className={navItem} aria-expanded={desktopOpen === link.label}>
                     <span className="hover-fill [--fill:rgba(255,92,0,0.25)]">{link.label}</span>
                     <FontAwesomeIcon icon={faCaretDown} className="text-xs" />
                   </Link>
-                  <div className="invisible absolute left-0 top-full pt-3 opacity-0 transition-all group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+                  <div className={["absolute left-0 top-full", panel(link.label)].join(" ")}>
                     <ul className="min-w-48 bg-white py-2 shadow-[0_10px_30px_rgba(0,0,0,0.12)]">
                       {link.children.map((child) => (
                         <li key={child.label}>
@@ -121,7 +165,7 @@ export const Header: React.FC = () => {
             className="absolute inset-x-0 top-full overflow-hidden rounded-b-[30px] border-t border-line bg-white shadow-[0_14px_16px_rgba(0,0,0,0.11)] lg:hidden"
           >
             <ul>
-              {navLinks.map((link) => {
+              {mobileLinks.map((link) => {
                 const active = isActive(link.href) && !link.children;
                 const subOpen = openSub === link.label;
                 return (
@@ -132,7 +176,7 @@ export const Header: React.FC = () => {
                           type="button"
                           aria-expanded={subOpen}
                           onClick={() => setOpenSub(subOpen ? null : link.label)}
-                          className={[mobileItem, "w-full text-left", link.children.some((c) => isActive(c.href)) ? "bg-peach" : ""].join(" ")}
+                          className={[mobileItem, "w-full text-left", link.children.some((c) => isExact(c.href)) ? "bg-peach" : ""].join(" ")}
                         >
                           {link.label}
                           <FontAwesomeIcon icon={faCaretDown} className={["ml-3 text-sm transition-transform", subOpen ? "rotate-180" : ""].join(" ")} />
@@ -144,7 +188,7 @@ export const Header: React.FC = () => {
                                 <Link
                                   href={child.href}
                                   onClick={closeMenu}
-                                  className={[mobileItem, "pl-[60px]", isActive(child.href) ? "bg-peach" : ""].join(" ")}
+                                  className={[mobileItem, "pl-[60px]", isExact(child.href) ? "bg-peach" : ""].join(" ")}
                                 >
                                   {child.label}
                                 </Link>
